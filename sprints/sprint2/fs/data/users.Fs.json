@@ -1,0 +1,38 @@
+[
+  {
+    "id": 1,
+    "name": "Pedro",
+    "photo": "http://www.casa.com/pedro.jpg",
+    "email": "pedro@gmail.com"
+  },
+  {
+    "id": 2,
+    "name": "Lucas",
+    "photo": "http://www.casa.com/lucas.jpg",
+    "email": "lucas@gmail.com"
+  },
+  {
+    "id": 3,
+    "name": "Lucas",
+    "photo": "http://www.casa.com/lucas.jpg",
+    "email": "lucas@gmail.com"
+  },
+  {
+    "id": 4,
+    "name": "Lucas",
+    "photo": "http://www.casa.com/lucas.jpg",
+    "email": "lucas@gmail.com"
+  },
+  {
+    "id": 5,
+    "name": "Lucas",
+    "photo": "http://www.casa.com/lucas.jpg",
+    "email": "lucas@gmail.com"
+  },
+  {
+    "id": 6,
+    "name": "Lucas",
+    "photo": "http://www.casa.com/lucas.jpg",
+    "email": "lucas@gmail.com"
+  }
+]
