@@ -1,56 +1,86 @@
 const fs = require("fs");
+const crypto = require("crypto");
 
-const ruta = "./sprints/sprint2/fs/data/users.Fs.json";
-const configuracion = "utf-8";
-let usersArray,nextId,usersFs,user
-
+//const ruta = "./sprints/sprint2/fs/data/users.Fs.json";
+//const configuracion = "utf-8";
+//let usersArray,nextId,usersFs,user
 
 class UserManager {
-  constructor() {}
+  init() {
+    try {
+      const exists = fs.existsSync(this.path);
+      if (!exists) {
+        const data = JSON.stringify([], null, 2);
+        fs.writeFileSync(this.path, data);
+      } else {
+        this.users = JSON.parse(fs.readFileSync(this.path, "utf-8"));
+      }
+    } catch (error) {
+      return error.message;
+    }
+  }
 
-  create(data) {
-    fs.promises
-      .readFile(ruta,configuracion)
-      .then((usersFs)=>{
-        usersArray = JSON.parse(usersFs)
-        nextId = usersArray.length+1
+  constructor(path) {
+    this.path = path;
+    this.users = [];
+    this.init();
+  }
+  async create(data) {
+    try {
+      if (!data.name) {
+        throw new Error("title is required");
+      }
+      //      nextId = productsArray.length+1
+      //nextId = 1;
 
-        const user = {
-          id: nextId,
-          name: data.name,
-          photo: data.photo,
-          email: data.email,
-        };
-        usersArray.push(user);
-        usersFs = JSON.stringify(usersArray,1,2)
-        fs.promises.writeFile(ruta,usersFs)
-          .then(res=>console.log('se escribio bien'))
-          .catch(error=>console.log('ocurrio un error'))
-      })
-      .catch((error)=> console.log(error));
+      const user = {
+        id: crypto.randomBytes(12).toString("hex"),
+        name: data.name,
+        photo: data.photo,
+        email: data.email,
+      };
 
+      this.users.push(user);
+      const jsonData = JSON.stringify(this.users, null, 2);
+
+      await fs.promises.writeFile(this.path, jsonData); //all poner await, debo poner async a la funcion donde esta esta instruccion
+      console.log(user.id);
+      return user.id;
+    } catch (error) {
+      console.log(error.message);
+      return error.message;
+    }
   }
   read() {
-    fs.promises
-      .readFile(ruta,configuracion)
-      .then((usersFs)=>{
-        usersArray = JSON.parse(usersFs)
-        console.log(usersArray);
-      })
+    try {
+      if (this.users.length === 0) {
+        throw new Error("The are no users!");
+      } else {
+        console.log(this.users);
+        return this.users;
+      }
+    } catch (error) {
+      console.log(error.message);
+      return error.message;
+    }
   }
   readOne(id) {
-    fs.promises
-    .readFile(ruta,configuracion)
-    .then((usersFs)=>{
-      usersArray = JSON.parse(usersFs)
-      user = usersArray.find((each) => each.id === Number(id));
-      console.log(user);
-    })
-
+    try {
+      const one = this.users.find((each) => each.id === id);
+      if (!one) {
+        throw new Error("There isn't any user");
+      } else {
+        //console.log(one);
+        return one;
+      }
+    } catch (error) {
+      console.log(error.message);
+      return error.message;
+    }
   }
 }
 
-const users = new UserManager();
+const users = new UserManager("./sprints/sprint2/fs/data/users.Fs.json");
 
 users.create({
   name: "Juan",
@@ -70,5 +100,5 @@ users.create({
 
 console.log('Output of users.read():  ');
 console.log(users.read());
-console.log('Output of users.readOne(2):  ');
-console.log(users.readOne(2));
+console.log('Output of users.readOne(2854b8cadedcce4e653d5375):  ');
+console.log(users.readOne("2854b8cadedcce4e653d5375"));

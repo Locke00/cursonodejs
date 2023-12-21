@@ -1,67 +1,87 @@
 const fs = require("fs");
+const crypto = require("crypto");
 
-const ruta = "./sprints/sprint2/fs/data/products.Fs.json";
-const configuracion = "utf-8";
-let productsArray,nextId,productsFs,producto
-
+//const ruta = "./sprints/sprint2/fs/data/products.Fs.json";
+//const configuracion = "utf-8";
+//let nextId;
+//let productsArray,nextId,productsFs,producto
 
 class ProductManager {
-  constructor() {}
-  create(data) {
-    fs.promises
-      .readFile(ruta,configuracion)
-      .then((productsFs)=>{
-        productsArray = JSON.parse(productsFs)
-        nextId = productsArray.length+1
+  init() {
+    try {
+      const exists = fs.existsSync(this.path);
+      if (!exists) {
+        const data = JSON.stringify([], null, 2);
+        fs.writeFileSync(this.path, data);
+      } else {
+        this.products = JSON.parse(fs.readFileSync(this.path, "utf-8"));
+      }
+    } catch (error) {
+      return error.message;
+    }
+  }
 
-        const product = {
-          id: nextId,
-          title: data.title,
-          photo: data.photo,
-          price: data.price,
-          stock: data.stock,
-        };
-        productsArray.push(product);
-        productsFs = JSON.stringify(productsArray,1,2)
-        fs.promises.writeFile(ruta,productsFs)
-          .then(res=>console.log('se escribio bien'))
-          .catch(error=>console.log('ocurrio un error'))
-      })
-      .catch((error)=> console.log(error));
+  constructor(path) {
+    this.path = path;
+    this.products = [];
+    this.init();
+  }
+  async create(data) {
+    try {
+      if (!data.title) {
+        throw new Error("title is required");
+      }
+      //      nextId = productsArray.length+1
+      //nextId = 1;
 
+      const product = {
+        id: crypto.randomBytes(12).toString("hex"),
+        title: data.title,
+        photo: data.photo,
+        price: data.price,
+        stock: data.stock,
+      };
+      this.products.push(product);
+      const jsonData = JSON.stringify(this.products, null, 2);
+
+      await fs.promises.writeFile(this.path, jsonData); //all poner await, debo poner async a la funcion donde esta esta instruccion
+      console.log(product.id);
+      return product.id;
+    } catch (error) {
+      console.log(error.message);
+      return error.message;
+    }
   }
   read() {
-    fs.promises
-      .readFile(ruta,configuracion)
-      .then((productsFs)=>{
-        productsArray = JSON.parse(productsFs)
-        console.log(productsArray);
-      })
+    try {
+      if (this.products.length === 0) {
+        throw new Error("The are no products!");
+      } else {
+        console.log(this.products);
+        return this.products;
+      }
+    } catch (error) {
+      console.log(error.message);
+      return error.message;
+    }
   }
   readOne(id) {
-    fs.promises
-    .readFile(ruta,configuracion)
-    .then((productsFs)=>{
-      productsArray = JSON.parse(productsFs)
-      producto = productsArray.find((each) => each.id === Number(id));
-      console.log(producto);
-    })
-
+    try {
+      const one = this.products.find((each) => each.id === id);
+      if (!one) {
+        throw new Error("There isn't any product");
+      } else {
+        //console.log(one);
+        return one;
+      }
+    } catch (error) {
+      console.log(error.message);
+      return error.message;
+    }
   }
 }
 
-const products = new ProductManager();
-
-
-let producto1 = [{
-  title: "casa",
-  photo: "http://www.multimarcas.com/casa.jpg",
-  price: 3000,
-  stock: 5,
-}  ]
-
-
-
+const products = new ProductManager("./sprints/sprint2/fs/data/products.Fs.json");
 
 
 products.create({
@@ -71,8 +91,7 @@ products.create({
   stock: 5,
 });
 
-
-products.create({
+/*products.create({
   title: "auto",
   photo: "http://www.multimarcas.com/auto.jpg",
   price: 1000,
@@ -84,7 +103,6 @@ products.create({
   price: 500,
   stock: 5,
 });
-
-
+*/
 console.log(products.read());
-console.log(products.readOne(3));
+console.log(products.readOne("2464fa95246cbd5050e3a466"));
