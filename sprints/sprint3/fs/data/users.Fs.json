@@ -58,17 +58,5 @@
     "name": "Juan",
     "photo": "http://www.casa.com/juan.jpg",
     "email": "juan@gmail.com"
-  },
-  {
-    "id": "7855492351fe9b5fcd5ba2c6",
-    "name": "Pedro",
-    "photo": "http://www.casa.com/pedro.jpg",
-    "email": "pedro@gmail.com"
-  },
-  {
-    "id": "5ef03a1c083703f0eb1cf6fb",
-    "name": "Lucas",
-    "photo": "http://www.casa.com/lucas.jpg",
-    "email": "lucas@gmail.com"
   }
 ]

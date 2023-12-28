@@ -6,6 +6,7 @@ import crypto from "crypto";
 //let usersArray,nextId,usersFs,user
 
 class UserManager {
+  static #users = []
   init() {
     try {
       const exists = fs.existsSync(this.path);
@@ -13,7 +14,7 @@ class UserManager {
         const data = JSON.stringify([], null, 2);
         fs.writeFileSync(this.path, data);
       } else {
-        this.users = JSON.parse(fs.readFileSync(this.path, "utf-8"));
+        UserManager.#users = JSON.parse(fs.readFileSync(this.path, "utf-8"));
       }
     } catch (error) {
       return error.message;
@@ -22,7 +23,7 @@ class UserManager {
 
   constructor(path) {
     this.path = path;
-    this.users = [];
+    //UserManager.#users = [];
     this.init();
   }
   async create(data) {
@@ -30,7 +31,7 @@ class UserManager {
       if (!data.name) {
         throw new Error("title is required");
       }
-      //      nextId = productsArray.length+1
+      //      nextId = usersArray.length+1
       //nextId = 1;
 
       const user = {
@@ -40,8 +41,8 @@ class UserManager {
         email: data.email,
       };
 
-      this.users.push(user);
-      const jsonData = JSON.stringify(this.users, null, 2);
+      UserManager.#users.push(user);
+      const jsonData = JSON.stringify(UserManager.#users, null, 2);
 
       await fs.promises.writeFile(this.path, jsonData); //all poner await, debo poner async a la funcion donde esta esta instruccion
       console.log(user.id);
@@ -53,11 +54,11 @@ class UserManager {
   }
   read() {
     try {
-      if (this.users.length === 0) {
+      if (UserManager.#users.length === 0) {
         throw new Error("The are no users!");
       } else {
-        console.log(this.users);
-        return this.users;
+        console.log(UserManager.#users);
+        return UserManager.#users;
       }
     } catch (error) {
       console.log(error.message);
@@ -66,11 +67,11 @@ class UserManager {
   }
   readOne(id) {
     try {
-      const one = this.users.find((each) => each.id === id);
+      const one = UserManager.#users.find((each) => each.id === id);
       if (!one) {
         throw new Error("There isn't any user");
       } else {
-        //console.log(one);
+        console.log(one);
         return one;
       }
     } catch (error) {
@@ -78,11 +79,38 @@ class UserManager {
       return error.message;
     }
   }
+  async destroy(id) {
+    try {
+      const one = UserManager.#users.find((each)=> each.id === id)
+      if (one) {
+        UserManager.#users = UserManager.#users.filter(
+          (each)=>each.id !== one.id
+        );
+        await fs.promises.writeFile(
+          this.path,
+          JSON.stringify(UserManager.#users, null, 2)
+        )
+        console.log("Destroy ID: "+id);
+        return one;
+      } else {
+        throw new Error("there is no user");
+      }
+
+    } catch (error){
+      console.log(error.message);
+      return error.message
+    }
+  }
+
 }
 
 const users = new UserManager("./fs/data/users.Fs.json");
 export default users;
-console.log(users.read());
+//console.log(users.read());
+
+await users.readOne("7855492351fe9b5fcd5ba2c6");
+await users.destroy("7855492351fe9b5fcd5ba2c6");
+await users.readOne("7855492351fe9b5fcd5ba2c6");
 
 
 //console.log(users.read());

@@ -47,19 +47,5 @@
     "photo": "http://www.multimarcas.com/casa.jpg",
     "price": 3000,
     "stock": 5
-  },
-  {
-    "id": "4a9d62ebb7c4ac575cede2ab",
-    "title": "auto",
-    "photo": "http://www.multimarcas.com/auto.jpg",
-    "price": 1000,
-    "stock": 5
-  },
-  {
-    "id": "8f2f1521de5e417e989f98cf",
-    "title": "moto",
-    "photo": "http://www.multimarcas.com/auto.jpg",
-    "price": 500,
-    "stock": 5
   }
 ]

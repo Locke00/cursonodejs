@@ -13,6 +13,7 @@ import crypto from "crypto"
 //let productsArray,nextId,productsFs,producto
 
 class ProductManager {
+  static #products = []
   init() {
     try {
       const exists = fs.existsSync(this.path);
@@ -20,7 +21,7 @@ class ProductManager {
         const data = JSON.stringify([], null, 2);
         fs.writeFileSync(this.path, data);
       } else {
-        this.products = JSON.parse(fs.readFileSync(this.path, "utf-8"));
+        ProductManager.#products = JSON.parse(fs.readFileSync(this.path, "utf-8"));
       }
     } catch (error) {
       return error.message;
@@ -29,7 +30,7 @@ class ProductManager {
 
   constructor(path) {
     this.path = path;
-    this.products = [];
+    //ProductManager.#products = [];
     this.init();
   }
   async create(data) {
@@ -47,8 +48,8 @@ class ProductManager {
         price: data.price,
         stock: data.stock,
       };
-      this.products.push(product);
-      const jsonData = JSON.stringify(this.products, null, 2);
+      ProductManager.#products.push(product);
+      const jsonData = JSON.stringify(ProductManager.#products, null, 2);
 
       await fs.promises.writeFile(this.path, jsonData); //all poner await, debo poner async a la funcion donde esta esta instruccion
       console.log(product.id);
@@ -60,11 +61,11 @@ class ProductManager {
   }
   read() {
     try {
-      if (this.products.length === 0) {
+      if (ProductManager.#products.length === 0) {
         throw new Error("The are no products!");
       } else {
-        //console.log(this.products);
-        return this.products;
+        console.log(ProductManager.#products);
+        return ProductManager.#products;
       }
     } catch (error) {
       console.log(error.message);
@@ -73,11 +74,11 @@ class ProductManager {
   }
   readOne(id) {
     try {
-      const one = this.products.find((each) => each.id === id);
+      const one = ProductManager.#products.find((each) => each.id === id);
       if (!one) {
         throw new Error("There isn't any product");
       } else {
-        //console.log(one);
+        console.log(one);
         return one;
       }
     } catch (error) {
@@ -85,15 +86,35 @@ class ProductManager {
       return error.message;
     }
   }
-  
+  async destroy(id) {
+    try {
+      const one = ProductManager.#products.find((each)=> each.id === id)
+      if (one) {
+        ProductManager.#products = ProductManager.#products.filter(
+          (each)=>each.id !== one.id
+        );
+        await fs.promises.writeFile(
+          this.path,
+          JSON.stringify(ProductManager.#products, null, 2)
+        )
+        console.log("Destroy ID: "+id);
+        return one;
+      } else {
+        throw new Error("there is no product");
+      }
 
+    } catch (error){
+      console.log(error.message);
+      return error.message
+    }
+  }
 }
 
 const products = new ProductManager("./fs/data/products.Fs.json");
 export default products
 
 
-console.log(products.read());
+//console.log(products.read());
 
 /*products.create({
   title: "casa",
@@ -114,7 +135,13 @@ products.create({
   price: 500,
   stock: 5,
 });
-
-console.log(products.read());
-console.log(products.readOne("2464fa95246cbd5050e3a466"));
 */
+
+//console.log(products.read());
+//console.log(products.readOne("2464fa95246cbd5050e3a466"));
+//await products.read();
+await products.readOne("4a9d62ebb7c4ac575cede2ab");
+await products.destroy("4a9d62ebb7c4ac575cede2ab");
+await products.readOne("4a9d62ebb7c4ac575cede2ab");
+
+//console.log(products.destroy("8f2f1521de5e417e989f98cf"));
