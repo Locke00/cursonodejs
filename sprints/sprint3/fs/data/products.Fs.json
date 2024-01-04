@@ -1,0 +1,51 @@
+[
+  {
+    "id": "df2c43c1fb8614774349f74c",
+    "title": "casa",
+    "photo": "http://www.multimarcas.com/casa.jpg",
+    "price": 3000,
+    "stock": 5
+  },
+  {
+    "id": "f90d1df044a00a650c6d09c3",
+    "title": "auto",
+    "photo": "http://www.multimarcas.com/auto.jpg",
+    "price": 1000,
+    "stock": 5
+  },
+  {
+    "id": "27873297237969c54dd87a1a",
+    "title": "moto",
+    "photo": "http://www.multimarcas.com/auto.jpg",
+    "price": 500,
+    "stock": 5
+  },
+  {
+    "id": "2464fa95246cbd5050e3a466",
+    "title": "casa",
+    "photo": "http://www.multimarcas.com/casa.jpg",
+    "price": 3000,
+    "stock": 5
+  },
+  {
+    "id": "7fc16d2c195b8371e5267176",
+    "title": "auto",
+    "photo": "http://www.multimarcas.com/auto.jpg",
+    "price": 1000,
+    "stock": 5
+  },
+  {
+    "id": "79183189f93488eb73e79007",
+    "title": "moto",
+    "photo": "http://www.multimarcas.com/auto.jpg",
+    "price": 500,
+    "stock": 5
+  },
+  {
+    "id": "99799eeef80e633aa5344a09",
+    "title": "casa",
+    "photo": "http://www.multimarcas.com/casa.jpg",
+    "price": 3000,
+    "stock": 5
+  }
+]
