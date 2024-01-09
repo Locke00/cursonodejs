@@ -66,7 +66,7 @@ server.get(rutaConParams1, cbParams1); // lo puedo llamar asi: http://localhost:
 // y me devolvera: el id del producto a filtrar es: 1234
 
 const rutaConParams2 = "/api/products/:title/:category/:price/:stock"; // no hay limites en la cantidad de parametros q le voy a pasar al endpoint
-const cbParams2 = (req, res) => {
+const cbParams2 = (req, res) => {               // hay q respetar el orden de los parametros
   const { title, category, price, stock } = req.params;
   return res.status(200).json({
     title,
