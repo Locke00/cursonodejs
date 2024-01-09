@@ -1,13 +1,13 @@
 class Persona {
   static cantidadDePersonas = 0;
-  static admin = "coderhouse"
+  static admin = "coderhouse";
   constructor(nombre, apellido, edad, ciudad) {
     this.nombre = nombre;
     this.apellido = apellido;
     this.edad = edad;
     this.ciudad = ciudad;
     Persona.agregarAlContador();
-    this.ordenDeRegistro = Persona.cantidadDePersonas
+    this.ordenDeRegistro = Persona.cantidadDePersonas;
   }
   imprimir() {
     console.log(this);
@@ -16,15 +16,15 @@ class Persona {
   static agregarAlContador() {
     Persona.cantidadDePersonas++;
   }
-  static conocerAdmin = ()=>console.log(Persona.admin);
+  static conocerAdmin = () => console.log(Persona.admin);
 }
 
-const profe = new Persona("igna","borraz",33,"rosario")
+const profe = new Persona("igna", "borraz", 33, "rosario");
 profe.imprimir();
 profe.imprimirNombrecompleto();
 
-const tutor = new Persona("german","koning",30,"cordoba");
-tutor.imprimir()
+const tutor = new Persona("german", "koning", 30, "cordoba");
+tutor.imprimir();
 tutor.imprimirNombrecompleto();
 
 //para acceder a propiedades de la instancia de la clase
@@ -33,13 +33,13 @@ console.log(tutor.ciudad);
 //para acceder a propiedades estaticas de la clase
 console.log(Persona.cantidadDePersonas);
 
-Persona.agregarAlContador()
-Persona.agregarAlContador()
-Persona.agregarAlContador()
+Persona.agregarAlContador();  // suma 1 al contador de personas
+Persona.agregarAlContador();
+Persona.agregarAlContador();
 
+console.log(Persona.cantidadDePersonas);   // muestra 5
 
-console.log(Persona.cantidadDePersonas);
-Persona.conocerAdmin()
+Persona.conocerAdmin();     // muestra: "coderhouse"
 
 console.log(profe.ordenDeRegistro);
 console.log(tutor.ordenDeRegistro);
