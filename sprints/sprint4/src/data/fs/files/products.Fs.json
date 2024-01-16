@@ -61,5 +61,19 @@
     "photo": "pelota.jpg",
     "price": 2000,
     "stock": 10
+  },
+  {
+    "id": "e7349b94c077ff8cd3a82311",
+    "title": "pelota",
+    "photo": "pelota.jpg",
+    "price": 2000,
+    "stock": 10
+  },
+  {
+    "id": "dc67a66fe33702c98d7f0c72",
+    "title": "pelota",
+    "photo": "pelota.jpg",
+    "price": 2000,
+    "stock": 10
   }
 ]

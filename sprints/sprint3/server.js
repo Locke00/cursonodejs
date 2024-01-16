@@ -12,9 +12,9 @@ server.use(express.urlencoded({ extended: true }));
 server.listen(PORT, ready);
 
 //endpoints: products
-server.get("/api/products", (req, res) => {
+server.get("/api/products", async (req, res) => {
   try {
-    const all = products.read();
+    const all = await products.read();
     if (Array.isArray(all)) {
       return res.status(200).json({
         success: true,
