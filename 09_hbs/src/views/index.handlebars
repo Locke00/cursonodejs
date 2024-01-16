@@ -1,0 +1,22 @@
+{{!-- directamente diseñar la pagina de inicio --}}
+{{!-- desde el endpoint me envian el objeto con la propiedad mainEvent --}}
+{{!-- para loopera los eventos, utilizo la sintaxis each --}}
+<main>
+  <h1>Pagina de inicio</h1>
+  <h3>{{date}}</h3>
+  {{#if details}}           {{!-- si existe la variable detalis, q la muestre --}}
+  <p>{{details}}</p>
+  {{else}}                  {{!-- si no existe, q muestre el lorem ipsum --}}
+
+  <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Magnam deleniti harum dolor ut blanditiis nihil eos sequi eum, minima nesciunt, at nulla iure ducimus labore quia, temporibus dolores velit vel?
+  Necessitatibus repudiandae ea perferendis sit unde eius quidem voluptate dicta optio nulla autem totam accusantium itaque sequi dolore omnis velit sed reiciendis, exercitationem error iusto. Itaque nulla ut possimus non.
+  Quibusdam, reiciendis ex? Labore officiis magnam voluptatum saepe quidem eligendi ex deleniti! Laudantium recusandae quidem voluptas sint velit numquam? Soluta debitis saepe doloremque voluptatem consequuntur consequatur provident tempore. Obcaecati, nam.</p>
+  {{/if}}
+  
+  {{#each events}}
+  {{!-- cuerpo de lo q se quiere loopear --}}
+  {{!-- this va a hacer referencia de CADA UNO de los elementos q voy a recorrer --}}
+  <h3>{{this}}</h3>
+  {{/each}}
+
+</main>
