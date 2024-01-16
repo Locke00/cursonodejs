@@ -1,0 +1,9 @@
+* {
+  margin: 0;
+  padding: 5px;
+  box-sizing: content-box;
+}
+
+body {
+  background-color: aquamarine;
+}
