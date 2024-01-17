@@ -1,0 +1,90 @@
+[
+  {
+    "id": "6730c64dc40e33eb1f1a23f5",
+    "name": "dbz",
+    "poster": "https://i.postimg.cc/J0KqrSbv/dbz.jpg",
+    "place": "showcase",
+    "price": 10,
+    "capacity": 50,
+    "date": "2024-01-04T12:08:49.658Z"
+  },
+  {
+    "id": "9c0c99c5966901ec2807c650",
+    "name": "hp",
+    "poster": "https://i.postimg.cc/C1G7tRdF/hp.jpg",
+    "place": "showcase",
+    "price": 10,
+    "capacity": 50,
+    "date": "2024-01-04T12:09:12.943Z"
+  },
+  {
+    "id": "2104b0ed871031c5c584afbe",
+    "name": "hulk",
+    "poster": "https://i.postimg.cc/RCTGLJjd/hulk.jpg",
+    "place": "showcase",
+    "price": 10,
+    "capacity": 50,
+    "date": "2024-01-04T12:09:28.569Z"
+  },
+  {
+    "id": "e562f7797675148dfde797ea",
+    "name": "marvels",
+    "poster": "https://i.postimg.cc/LXKvNt9C/marvels.jpg",
+    "place": "showcase",
+    "price": 10,
+    "capacity": 50,
+    "date": "2024-01-04T12:09:42.548Z"
+  },
+  {
+    "id": "2caa596f9b49092bd15fe7d0",
+    "name": "pokemon",
+    "poster": "https://i.postimg.cc/3N31H3D2/pkm.jpg",
+    "place": "showcase",
+    "price": 10,
+    "capacity": 50,
+    "date": "2024-01-04T12:09:56.006Z"
+  },
+  {
+    "id": "3b91769486ac8771bfbd20a3",
+    "name": "lord of the rings",
+    "poster": "https://i.postimg.cc/0yyQKkVq/rings.jpg",
+    "place": "Stadium",
+    "price": "2",
+    "capacity": "1000",
+    "date": "2024-01-05T22:17:52.959Z"
+  },
+  {
+    "id": "e77abf820ff0f454fddcb33c",
+    "name": "batman",
+    "poster": "https://www.lavanguardia.com/files/og_thumbnail/uploads/2017/04/10/5fa3c6ca21373.jpeg",
+    "place": "showcase",
+    "price": 1,
+    "capacity": 200,
+    "date": "2024-01-16T18:54:42.832Z"
+  },
+  {
+    "id": "51deea8a47fc24947318a929",
+    "poster": "https://i.postimg.cc/HxdvTwqJ/events.jpg",
+    "price": 10,
+    "capacity": 50,
+    "date": "2024-01-17T00:28:15.946Z"
+  },
+  {
+    "id": "f1422242c162ab3035724568",
+    "name": "peli de ignaa",
+    "poster": "https://i.postimg.cc/HxdvTwqJ/events.jpg",
+    "place": "stadiumm",
+    "price": 10,
+    "capacity": 50,
+    "date": "2024-01-17T00:28:37.272Z"
+  },
+  {
+    "id": "cf629f88df844938a38e3250",
+    "name": "ignacio",
+    "poster": "data:image/jpeg;base64,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",
+    "place": "garde",
+    "price": "33",
+    "capacity": "33",
+    "date": "2024-01-10"
+  }
+]
