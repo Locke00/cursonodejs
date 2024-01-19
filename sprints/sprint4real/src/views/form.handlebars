@@ -1,28 +1,30 @@
-<form class="w-50 m-auto my-5">
-  <div class="mb-3">
-    <label for="exampleInputEmail1" class="form-label">Title</label>
-    <input type="text" class="form-control" id="title" aria-describedby="emailHelp">
-  </div>
-  <div class="mb-3">
-    <label for="exampleInp  utPassword1" class="form-label">Poster</label>
-    <input type="text" class="form-control" id="poster">
-  </div>
-  <div class="mb-3">
-    <label for="exampleInp  utPassword1" class="form-label">Price</label>
-    <input type="number" class="form-control" id="price">
-  </div>
-  <div class="mb-3">
-    <label for="exampleInp  utPassword1" class="form-label">Capacity</label>
-    <input type="number" class="form-control" id="capacity">
-  </div>
-  <div class="mb-3">
-    <label for="exampleInp  utPassword1" class="form-label">Place</label>
-    <input type="text" class="form-control" id="place">
-  </div>
-  <div class="mb-3">
-    <label for="exampleInp  utPassword1" class="form-label">Date</label>
-    <input type="date" class="form-control" id="date">
-  </div>
-  
-  <button type="submit" class="btn btn-primary" id="newProduct">Submit</button>
-</form>
+<main><section>
+    <form class="w-100 m-auto my-5">
+      <div class="mb-3">
+        <label for="exampleInp  utPassword1" class="form-label">Title</label>
+        <input type="text" class="form-control" id="title" />
+      </div>
+      <div class="mb-3">
+        <label for="exampleInp  utPassword1" class="form-label">Photo</label>
+        <input type="text" class="form-control" id="photo" />
+      </div>
+      <div class="mb-3">
+        <label for="exampleInp  utPassword1" class="form-label">Price</label>
+        <input type="number" class="form-control" id="price" />
+      </div>
+      <div class="mb-3">
+        <label for="exampleInp  utPassword1" class="form-label">Stock</label>
+        <input type="number" class="form-control" id="stock" />
+      </div>
+
+      <button
+        type="submit"
+        class="btn btn-primary"
+        id="newProduct">Submit</button>
+    </form>
+
+  </section>
+</main>
+
+<script src="/socket.io/socket.io.js"></script>
+<script src="/form.js"></script>

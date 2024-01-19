@@ -11,6 +11,8 @@ import pathHandler from "./src/middlewares/pathHandler.mid.js";
 import __dirname from "./utils.js";
 import morgan from "morgan"; 
 import { engine } from "express-handlebars";
+import productsRouter from "./src/routers/api/products.router.api.js";
+import { log } from "console";
 
 
 const server = express()
@@ -29,10 +31,20 @@ socketServer.on("connection", (socket) => {
   
   
   
-  socket.on("new product",(msg)=>console.log(msg))
+  socket.on("new product", async(data)=>{
+    try {
+      console.log(data);
+      await products.create(data)
+    } catch (error) {
+      console.log(error);
+     
+    }
+    
+
+  })
 
 
-  
+
 });
 
 

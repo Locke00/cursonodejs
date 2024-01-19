@@ -75,5 +75,19 @@
     "photo": "https://assets.adidas.com/images/h_840,f_auto,q_auto,fl_lossy,c_fill,g_auto/26ac42be45734d419903ae7a00bbb000_9366/Pelota_Argentum_22_Pro_Blanco_HE3788_01_standard.jpg",
     "price": 2000,
     "stock": 10
+  },
+  {
+    "id": "31cfe5ba4edee26c7dae6ed0",
+    "title": "xbox360",
+    "photo": "https://http2.mlstatic.com/D_NQ_NP_2X_703206-MLA40127413620_122019-F.webp",
+    "price": "50000",
+    "stock": 3
+  },
+  {
+    "id": "1453141e761f7800fe3984c2",
+    "title": "wii",
+    "photo": "https://http2.mlstatic.com/D_NQ_NP_2X_813569-MLA32731593369_112019-F.webp",
+    "price": "40000",
+    "stock": "3"
   }
 ]

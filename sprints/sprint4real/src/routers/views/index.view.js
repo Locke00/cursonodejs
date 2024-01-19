@@ -31,7 +31,16 @@ viewsRouter.get("/real", (req, res, next) => {
 
 
 viewsRouter.use("/register", registerRouter);
-viewsRouter.use("/form", formRouter);
+viewsRouter.get("/form", (req, res, next) => {
+  try {
+    return res.render("form", { title: "Form" });
+  } catch (error) {
+    next(error);
+  }
+});
+
+
+
 
 
 export default viewsRouter;
