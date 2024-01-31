@@ -89,40 +89,5 @@
     "photo": "https://http2.mlstatic.com/D_NQ_NP_2X_813569-MLA32731593369_112019-F.webp",
     "price": "40000",
     "stock": "3"
-  },
-  {
-    "id": "efbf02d093ac53582534d6d0",
-    "title": "swithc",
-    "photo": "https://http2.mlstatic.com/D_NQ_NP_2X_951681-MLA54269777044_032023-F.webp",
-    "price": "10000",
-    "stock": "2"
-  },
-  {
-    "id": "771f1ec0848709dcf499b67d",
-    "title": "gameboy",
-    "photo": "22",
-    "price": "222",
-    "stock": "4"
-  },
-  {
-    "id": "50d5e18e8960ea42a1d2e0fa",
-    "title": "gameboy adv",
-    "photo": "22",
-    "price": "222",
-    "stock": "4"
-  },
-  {
-    "id": "f49603ad3f1e30228182db07",
-    "title": "gameboy 4",
-    "photo": "22",
-    "price": "222",
-    "stock": "4"
-  },
-  {
-    "id": "d4444f39a01b710a07434bc3",
-    "title": "gameboy 5",
-    "photo": "22",
-    "price": "222",
-    "stock": "4"
   }
 ]
