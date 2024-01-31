@@ -13,7 +13,7 @@ import __dirname from "./utils.js";
 
 //server
 const server = express();
-const PORT = 8080;
+const PORT = 9001;
 const ready = console.log("server ready on port " + PORT);
 //server.listen(PORT, ready);
 const httpServer = createServer(server);
