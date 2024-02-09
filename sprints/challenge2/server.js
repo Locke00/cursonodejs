@@ -1,7 +1,9 @@
+
+import "dotenv/config.js"
 import express from "express"
 import { createServer } from "http";  // la funcion para crear el server
 import { Server } from "socket.io";   // la clase para crear un socket server
-import products from "./src/data/fs/productFs.manager.js";
+//import products from "./src/data/fs/productFs.manager.js";
 
 
 
@@ -11,44 +13,27 @@ import pathHandler from "./src/middlewares/pathHandler.mid.js";
 import __dirname from "./utils.js";
 import morgan from "morgan"; 
 import { engine } from "express-handlebars";
-import productsRouter from "./src/routers/api/products.router.api.js";
+import socketUtils from "./src/utils/socket.utils.js";
+//import productsRouter from "./src/routers/api/products.router.api.js";
 import { log } from "console";
+import dbConnection from "./src/utils/dbConnection.utils.js";
+
 
 
 const server = express()
-const PORT = 8080
-const ready = ()=>console.log("server ready on port "+PORT);
+const PORT = process.env.PORT || 8080;
+const ready = () => {
+  console.log("server ready on port " + PORT);
+  dbConnection();
+};
 //server.listen(PORT,ready)
 
 const httpServer = createServer(server);
 const socketServer = new Server(httpServer);
 httpServer.listen(PORT, ready); //este servidor nativo de node va a tener todas las configuraciones de express
+
 //este servidor nativo si es compatible con socket
-socketServer.on("connection", (socket) => {
-  console.log("se conecto alguien nuevo")
-  socket.emit("welcome", "welcome to my cinema")
-  socket.emit("products", products.read() );
-  
-  
-  
-  socket.on("new product", async(data)=>{
-    try {
-      console.log(data);
-      await products.create(data)
-    } catch (error) {
-      console.log(error);
-     
-    }
-    
-
-  })
-
-
-
-});
-
-
-
+socketServer.on("connection", socketUtils);
 
 
 
@@ -74,3 +59,6 @@ server.use(morgan("dev"))
 server.use("/",router)            //q use todas las rutas q voy a definir en ese enrutador principal
 server.use(errorHandler)
 server.use(pathHandler)
+
+
+export { socketServer }

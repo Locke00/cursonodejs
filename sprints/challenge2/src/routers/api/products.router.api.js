@@ -30,21 +30,30 @@ productsRouter.post("/", async (req,res,next)=>{
 })
 productsRouter.get("/",async (req,res,next)=>{
   try {
-    const all = await products.read();
-    if (Array.isArray(all)) {
-      return res.status(200).json({
-        success: true,
-        response: all,
-      });
-    } else {
-      return res.status(404).json({
-        success: false,
-        message: all,
-      });
+    const filter = {}
+    if (req.query.title) {
+      filter.title = new RegExp(req.query.title.trim(),'i') 
     }
+    // vamos a hacer una ordenacion y paginacion x defecto:
+    const orderAndPaginate = {
+      limit: req.query.limit || 10,       //q cada pagina tenga 20 documentos
+      page: req.query.page || 1,         //q arranque x defecto en la pagina 1
+      //sort: { title: 1 }    //q lo ordene x nombre   (si quisiera ordenar x email: sort: { name: 1 })
+    }
+
+    if (req.query.name==="desc") {        //estos considionales son necesarios para cuando hay q poner en particuplar 
+      orderAndPaginate.sort.name = -1
+    }
+
+    const all = await products.read({filter, orderAndPaginate}); // se le manda un objeto vacio salvo q le agreguemos un filtro y el sort
+    return res.json({
+      statusCode: 200,
+      response: all,
+    });
   } catch (error) {
-    return next(error)  //indica q lo dejo pasar al middleware de errores
+    return next(error);
   }
+
 })
 productsRouter.get("/:pid",async (req,res,next)=>{
   try {
