@@ -31,20 +31,18 @@ ordersRouter.post("/", async (req,res,next)=>{
 })
 ordersRouter.get("/",async (req,res,next)=>{
   try {
-    const all = await orders.read();
-    if (Array.isArray(all)) {
-      return res.status(200).json({
-        success: true,
-        response: all,
-      });
-    } else {
-      return res.status(404).json({
-        success: false,
-        message: all,
-      });
+    let filter = {}    //este tiene q ser let
+    if (req.query.user_id) {
+      filter = { user_id: req.query.user_id }
+
     }
+    const all = await orders.read({ filter })
+    return res.json({
+      statusCode: 200,
+      response: all
+    })
   } catch (error) {
-    return next(error)  //indica q lo dejo pasar al middleware de errores
+    return next(error)
   }
 })
 ordersRouter.get("/:pid",async (req,res,next)=>{
