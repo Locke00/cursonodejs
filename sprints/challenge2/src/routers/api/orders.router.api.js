@@ -1,5 +1,6 @@
 import { Router } from "express";
-import orders from "../../data/fs/orderFs.manager.js"
+//import orders from "../../data/fs/orderFs.manager.js"
+import { orders } from "../../data/mongo/manager.mongo.js"; //importo el manager de ordenes
 
 
 const ordersRouter = Router()

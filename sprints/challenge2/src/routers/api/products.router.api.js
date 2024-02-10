@@ -1,6 +1,7 @@
 import { Router } from "express";
-import products from "../../data/fs/productFs.manager.js"
-
+//import products from "../../data/fs/productFs.manager.js"
+//import { pdo } from "../../data/mongo/manager.mongo.js";
+import { products } from "../../data/mongo/manager.mongo.js";
 
 const productsRouter = Router()
 
@@ -31,9 +32,9 @@ productsRouter.post("/", async (req,res,next)=>{
 productsRouter.get("/",async (req,res,next)=>{
   try {
     const filter = {}
-    if (req.query.title) {
+/*    if (req.query.title) {
       filter.title = new RegExp(req.query.title.trim(),'i') 
-    }
+    }*/
     // vamos a hacer una ordenacion y paginacion x defecto:
     const orderAndPaginate = {
       limit: req.query.limit || 10,       //q cada pagina tenga 20 documentos
@@ -41,8 +42,8 @@ productsRouter.get("/",async (req,res,next)=>{
       //sort: { title: 1 }    //q lo ordene x nombre   (si quisiera ordenar x email: sort: { name: 1 })
     }
 
-    if (req.query.name==="desc") {        //estos considionales son necesarios para cuando hay q poner en particuplar 
-      orderAndPaginate.sort.name = -1
+    if (req.query.title==="desc") {        //estos considionales son necesarios para cuando hay q poner en particuplar 
+      orderAndPaginate.sort.title = -1
     }
 
     const all = await products.read({filter, orderAndPaginate}); // se le manda un objeto vacio salvo q le agreguemos un filtro y el sort

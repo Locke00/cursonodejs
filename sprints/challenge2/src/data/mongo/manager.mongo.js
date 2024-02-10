@@ -1,7 +1,7 @@
 //importar los modelos para luego ngenerar las instancias de
 //las diferentes managers
 import User from "./models/user.model.js";
-import Event from "./models/product.model.js";
+import Product from "./models/product.model.js";
 import Order from "./models/order.model.js";
 import notFoundOne from "../../utils/notFountOne.utils.js";
 import { Types } from "mongoose";
@@ -142,10 +142,10 @@ class MongoManager {
 }
 
 const users = new MongoManager(User);
-const events = new MongoManager(Event);
+const products = new MongoManager(Product);
 const orders = new MongoManager(Order);
 
-export { users, events, orders };
+export { users, products, orders };
 
 //alternativamente se puede hacer un export default del manager, 
 //pero lo mejor, es exportar las instanacias:
