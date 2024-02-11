@@ -29,6 +29,20 @@ ordersRouter.post("/", async (req,res,next)=>{
     return next(error)  //indica q lo dejo pasar al middleware de errores
   }
 })
+
+ordersRouter.get("/total/:uid", async(req, res, next)=> {
+  try {
+    const { uid } = req.params
+    const report = await orders.report(uid)
+    return res.json({
+      statusCode: 200,
+      response: report
+    })
+  } catch (error) {
+    throw error
+  }
+})
+
 ordersRouter.get("/",async (req,res,next)=>{
   try {
     let filter = {}    //este tiene q ser let

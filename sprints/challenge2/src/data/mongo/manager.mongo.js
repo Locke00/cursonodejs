@@ -71,7 +71,7 @@ class MongoManager {
           as: "product_id"         //este elemento es opcional. aqui indico como lo quiero traer
         }},
         //hace q los elementos del foreign tb esten en la raiz del elemento q esta referenciando (orders). para mergear el objeto con el objeto cero del array populado
-        { $replaceRoot: { newRoot: {$mergeObjects: [ {$arrayElemAt: ["$event_id",0]},"$$ROOT" ] } } },   
+        { $replaceRoot: { newRoot: {$mergeObjects: [ {$arrayElemAt: ["$product_id",0]},"$$ROOT" ] } } },   
         //agrega una propiedad q es producto de otras anteriores - para agregar la propiedad subtotal = price*quantity
         { $set: { subtotal: { $multiply: ["$price","$quantity"] } } },   
         //es un reduce q hace q queden unas propiedades. agrupa x adi, totaliza todos los subtotales - para agrupar por user_id y sumar los subtotales
