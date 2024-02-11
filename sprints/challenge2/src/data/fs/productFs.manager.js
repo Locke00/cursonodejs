@@ -52,7 +52,7 @@ class ProductManager {
       const jsonData = JSON.stringify(ProductManager.#products, null, 2);
 
       await fs.promises.writeFile(this.path, jsonData); //all poner await, debo poner async a la funcion donde esta esta instruccion
-      console.log(product.id);
+      //console.log(product.id);
       return product.id;
     } catch (error) {
       console.log(error.message);
@@ -64,7 +64,7 @@ class ProductManager {
       if (ProductManager.#products.length === 0) {
         throw new Error("The are no products!");
       } else {
-        console.log(ProductManager.#products);
+     //   console.log(ProductManager.#products);
         return ProductManager.#products;
       }
     } catch (error) {
