@@ -58,9 +58,13 @@ usersRouter.get("/",async (req,res,next)=>{
 })
 usersRouter.get("/:uid",async (req,res,next)=>{
   try {
-    const { pid } = req.params;
-    const one = await users.readOne(pid);
-    return res.status(200).json(one);
+    const { uid } = req.params;
+    const one = await users.readOne(uid);
+    //console.log(one);
+    return res.json({
+      statusCode: 200,
+      response: one,
+    });
   } catch (error) {
     return next(error);
   }
@@ -70,18 +74,11 @@ usersRouter.put("/:uid",async (req,res,next)=>{
     const { uid } = req.params
     const data = req.body;
     const response = await users.update(uid,data);
-    if (response === "User not found") {
-      return res.json({
-        statusCode: 400,
-        message: response,
-      });
-    } else {
-      return res.json({
-        statusCode: 200,
-        response, 
-      });
-    }
-  } catch (error) {
+    return res.json({
+      statusCode: 200,
+      response: response,
+    });
+    } catch (error) {
     return next(error)  //indica q lo dejo pasar al middleware de errores
   }
 })

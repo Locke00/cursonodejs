@@ -49,7 +49,7 @@ productsRouter.get("/",async (req,res,next)=>{
     const all = await products.read({filter, orderAndPaginate}); // se le manda un objeto vacio salvo q le agreguemos un filtro y el sort
     return res.json({
       statusCode: 200,
-      response: all,
+      response: all
     });
   } catch (error) {
     return next(error);
@@ -59,8 +59,12 @@ productsRouter.get("/",async (req,res,next)=>{
 productsRouter.get("/:pid",async (req,res,next)=>{
   try {
     const { pid } = req.params;
-    const one = products.readOne(pid);
-    return res.status(200).json(one);
+    const one = await products.readOne(pid);
+    //console.log(one);
+    return res.json({
+      statusCode: 200,
+      response: one,
+    });
   } catch (error) {
     return next(error)  //indica q lo dejo pasar al middleware de errores
   }
@@ -70,17 +74,10 @@ productsRouter.put("/:pid",async (req,res)=>{
     const { pid } = req.params
     const data = req.body;
     const response = await products.update(pid,data);
-    if (response === "Product not found") {
-      return res.json({
-        statusCode: 400,
-        message: response,
-      });
-    } else {
-      return res.json({
-        statusCode: 200,
-        response, 
-      });
-    }
+    return res.json({
+      statusCode: 200,
+      response: response,
+    });
   } catch (error) {
     return next(error)  //indica q lo dejo pasar al middleware de errores
   }

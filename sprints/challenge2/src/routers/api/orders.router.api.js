@@ -59,42 +59,36 @@ ordersRouter.get("/",async (req,res,next)=>{
     return next(error)
   }
 })
-ordersRouter.get("/:pid",async (req,res,next)=>{
+ordersRouter.get("/:oid",async (req,res,next)=>{
   try {
-    const { pid } = req.params;
-    const one = orders.readOne(pid);
+    const { oid } = req.params;
+    const one = orders.readOne(oid);
     return res.status(200).json(one);
   } catch (error) {
     return next(error)  //indica q lo dejo pasar al middleware de errores
   }
 })
-/*ordersRouter.put("/:pid",async (req,res)=>{
+
+
+ordersRouter.put("/:oid", async (req, res, next) => {
   try {
-    const { pid } = req.params
-    const data = req.body;
-    const response = await orders.update(pid,data);
-    if (response === "Order not found") {
-      return res.json({
-        statusCode: 400,
-        message: response,
-      });
-    } else {
-      return res.json({
-        statusCode: 200,
-        response, 
-      });
-    }
+    const { oid } = req.params;
+    const data = req.body
+    const response = await orders.update(oid, data);
+    return res.json({
+      statusCode: 200,
+      response: response,
+    });
   } catch (error) {
-    return next(error)  //indica q lo dejo pasar al middleware de errores
+    return next(error);
   }
-})
+});
 
 
-
-ordersRouter.delete("/:pid",async(req,res)=>{
+ordersRouter.delete("/:oid",async(req,res)=>{
   try {
-    const { pid } = req.params;
-    const response = await orders.destroy(pid);
+    const { oid } = req.params;
+    const response = await orders.destroy(oid);
     return res.json({
       statusCode: 200,
       response,
@@ -103,5 +97,7 @@ ordersRouter.delete("/:pid",async(req,res)=>{
     return next(error);
   }
 })
-*/
+
+
+
 export default ordersRouter

@@ -92,7 +92,12 @@ class MongoManager {
 
   async readOne(id) {
     try {
-      const one = await this.model.findById(id);
+      //el profe agregó el .lean(), pero no se para q si lo mismo funca
+      const one = await this.model.findById(id);//.lean();
+      //console.log("---start---");
+      //console.log(one);
+      //console.log("---end---");
+      //const one = await this.model.findById(id);
       notFoundOne(one);
       /*if (!one) {
         const error = new Error("There isn't any documents");
