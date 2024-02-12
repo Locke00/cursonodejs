@@ -142,13 +142,14 @@ class MongoManager {
     }
   }
 
+  //calcula estadisticas de tiempo y documentos filtrados
   async stats({ filter }) {
     try {
       let stats = await this.model.find(filter).explain("executionStats");
       console.log(stats);
       stats = {
-        quantity: stats.executionStats.nReturned,
-        time: stats.executionStats.executionStatsMillis,
+        quantity: stats.executionStats.nReturned,   //devuelve la cantidad de registros q pasaron el filtro
+        time: stats.executionStats.executionStatsMillis   //tiempo q demora
       };
       return stats;
     } catch (error) {
