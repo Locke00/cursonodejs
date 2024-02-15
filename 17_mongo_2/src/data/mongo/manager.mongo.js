@@ -62,16 +62,27 @@ class MongoManager {
     try {
       const report = await this.model.aggregate([
         //$match productos de un usuario en el carrito (las ordenes de un usuario)
-        { $match: { user_id: new Types.ObjectId(uid) } }
+        { $match: { user_id: new Types.ObjectId(uid) } },
         //$lookup para popular los eventos
         { $lookup: {
           from: "events",      // la coleccion q tengo q popular
-          foreignField: "_id",       // es como la foreing key
-          localField: "event_id"
+          foreignField: "_id",       // es como la foreing key 
+          localField: "event_id",     // propiedad q yo tengo q buscar en la coleccion eventos. es la q busco la coleccion "events"(from) con id "_id"(foreignField)
+          as: "event_id"         //este elemento es opcional. aqui indico como lo quiero traer
+        }},
+        //hace q los elementos del foreign tb esten en la raiz del elemento q esta referenciando (orders). para mergear el objeto con el objeto cero del array populado
+        { $replaceRoot: { newRoot: {$mergeObjects: [ {$arrayElemAt: ["$event_id",0]},"$$ROOT" ] } } },   
+        //agrega una propiedad q es producto de otras anteriores - para agregar la propiedad subtotal = price*quantity
+        { $set: { subtotal: { $multiply: ["$price","$quantity"] } } },   
+        //es un reduce q hace q queden unas propiedades. agrupa x adi, totaliza todos los subtotales - para agrupar por user_id y sumar los subtotales
+        { $group: { _id:"$user_id", total: { $sum: "$subtotal" } } },  
+        //para limpiar el objeto (dejar sólo user_id, total y date). tb permite agregar propiedades
+        { $project: { _id:0, user_id:"$_id", total: "$total", date: new Date(), currency: "USD" } },  //_id:0, quito la propiedad _id, ya q no es la piedad de la order, es lo mismo q _id: false. ademas hago q la id sea user_id
+        //$merge, es para crear un documento de la colección bills con la suma total
+        //alternativamente puedo crear el objeto generado como si fuera un objeto, es cual es agregado en la colleccion bills (se crea si no existe)
+        //{ $merge: { into: "bills" } }     
 
 
-
-        } }       
       ])
       return report
     } catch (error) {
