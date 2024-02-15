@@ -1,7 +1,7 @@
 //importar los modelos para luego ngenerar las instancias de
 //las diferentes managers
 import User from "./models/user.model.js";
-import Event from "./models/event.model.js";
+import Product from "./models/product.model.js";
 import Order from "./models/order.model.js";
 import notFoundOne from "../../utils/notFountOne.utils.js";
 import { Types } from "mongoose";
@@ -15,14 +15,14 @@ class MongoManager {
     try {
       const one = await this.model.create(data); //asi obtengo el objeto
       //return one._id; //devuelvo el id
-      return one
+      return one;
     } catch (error) {
       throw error;
     }
   }
 
   // a este read le voy a poner un filtro y un ordenamiento, x eso le paso parametro)
-  async read({ filter, orderAndPaginate}) {
+  async read({ filter, orderAndPaginate }) {
     try {
       //filter cno las consultas para el fitro
       //sort onel objeto para el ordenamiento
@@ -41,10 +41,9 @@ class MongoManager {
       //  //.populate("event_id","name planes price")   // para q esos campos si se agregen
       //  .sort(order);
 
-      const all = await this.model
-        .paginate(filter, orderAndPaginate)
+      const all = await this.model.paginate(filter, orderAndPaginate);
 
-      //console.log(all);  
+      //console.log(all);
       //if (all.docs.lenght === 0) {
       if (all.totalPages === 0) {
         const error = new Error("There aren't documents");
@@ -57,43 +56,60 @@ class MongoManager {
     }
   }
 
-
-  async reportBill(uid) {
+  async report(uid) {
     try {
       const report = await this.model.aggregate([
         //$match productos de un usuario en el carrito (las ordenes de un usuario)
         { $match: { user_id: new Types.ObjectId(uid) } },
         //$lookup para popular los eventos
-        { $lookup: {
-          from: "events",      // la coleccion q tengo q popular
-          foreignField: "_id",       // es como la foreing key 
-          localField: "event_id",     // propiedad q yo tengo q buscar en la coleccion eventos. es la q busco la coleccion "events"(from) con id "_id"(foreignField)
-          as: "event_id"         //este elemento es opcional. aqui indico como lo quiero traer
-        }},
+        {
+          $lookup: {
+            from: "products", // la coleccion q tengo q popular
+            foreignField: "_id", // es como la foreing key
+            localField: "product_id", // propiedad q yo tengo q buscar en la coleccion eventos. es la q busco la coleccion "events"(from) con id "_id"(foreignField)
+            as: "product_id", //este elemento es opcional. aqui indico como lo quiero traer
+          },
+        },
         //hace q los elementos del foreign tb esten en la raiz del elemento q esta referenciando (orders). para mergear el objeto con el objeto cero del array populado
-        { $replaceRoot: { newRoot: {$mergeObjects: [ {$arrayElemAt: ["$event_id",0]},"$$ROOT" ] } } },   
+        {
+          $replaceRoot: {
+            newRoot: {
+              $mergeObjects: [{ $arrayElemAt: ["$product_id", 0] }, "$$ROOT"],
+            },
+          },
+        },
         //agrega una propiedad q es producto de otras anteriores - para agregar la propiedad subtotal = price*quantity
-        { $set: { subtotal: { $multiply: ["$price","$quantity"] } } },   
+        { $set: { subtotal: { $multiply: ["$price", "$quantity"] } } },
         //es un reduce q hace q queden unas propiedades. agrupa x adi, totaliza todos los subtotales - para agrupar por user_id y sumar los subtotales
-        { $group: { _id:"$user_id", total: { $sum: "$subtotal" } } },  
+        { $group: { _id: "$user_id", total: { $sum: "$subtotal" } } },
         //para limpiar el objeto (dejar sólo user_id, total y date). tb permite agregar propiedades
-        { $project: { _id:0, user_id:"$_id", total: "$total", date: new Date(), currency: "USD" } },  //_id:0, quito la propiedad _id, ya q no es la piedad de la order, es lo mismo q _id: false. ademas hago q la id sea user_id
+        {
+          $project: {
+            _id: 0,
+            user_id: "$_id",
+            total: "$total",
+            date: new Date(),
+            currency: "USD",
+          },
+        }, //_id:0, quito la propiedad _id, ya q no es la piedad de la order, es lo mismo q _id: false. ademas hago q la id sea user_id
         //$merge, es para crear un documento de la colección bills con la suma total
         //alternativamente puedo crear el objeto generado como si fuera un objeto, es cual es agregado en la colleccion bills (se crea si no existe)
-        //{ $merge: { into: "bills" } }     
-
-
-      ])
-      return report
+        //{ $merge: { into: "bills" } }
+      ]);
+      return report;
     } catch (error) {
-      throw error
+      throw error;
     }
   }
 
-
   async readOne(id) {
     try {
-      const one = await this.model.findById(id);
+      //el profe agregó el .lean(), pero no se para q si lo mismo funca
+      const one = await this.model.findById(id);//.lean();
+      //console.log("---start---");
+      //console.log(one);
+      //console.log("---end---");
+      //const one = await this.model.findById(id);
       notFoundOne(one);
       /*if (!one) {
         const error = new Error("There isn't any documents");
@@ -126,27 +142,28 @@ class MongoManager {
     }
   }
 
-  async stats({filter}) {
+  //calcula estadisticas de tiempo y documentos filtrados
+  async stats({ filter }) {
     try {
       let stats = await this.model.find(filter).explain("executionStats");
       console.log(stats);
       stats = {
-        quantity: stats.executionStats.nReturned,
-        time: stats.executionStats.executionStatsMillis
-      }
-      return stats
+        quantity: stats.executionStats.nReturned,   //devuelve la cantidad de registros q pasaron el filtro
+        time: stats.executionStats.executionStatsMillis   //tiempo q demora
+      };
+      return stats;
     } catch (error) {
-      throw error
+      throw error;
     }
-  } 
+  }
 }
 
 const users = new MongoManager(User);
-const events = new MongoManager(Event);
+const products = new MongoManager(Product);
 const orders = new MongoManager(Order);
 
-export { users, events, orders };
+export { users, products, orders };
 
-//alternativamente se puede hacer un export default del manager, 
+//alternativamente se puede hacer un export default del manager,
 //pero lo mejor, es exportar las instanacias:
 //export default MongoManager;
