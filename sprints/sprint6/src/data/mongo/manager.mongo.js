@@ -102,7 +102,18 @@ class MongoManager {
     }
   }
 
-  async isuser(varEmail, varPassword) {
+  async readByEmail(email) {
+    try {
+      const one = await this.model.findOne({ email });
+      notFoundOne(one);
+      return one;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+
+/*  async isuser(varEmail, varPassword) {
     try {
       const report = await this.model.aggregate([
         //$match productos de un usuario en el carrito (las ordenes de un usuario)
@@ -115,7 +126,7 @@ class MongoManager {
     } catch (error) {
       throw error;
     }
-  }
+  }*/
 
 
 
