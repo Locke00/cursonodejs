@@ -4,6 +4,7 @@ import { products } from "../../data/mongo/manager.mongo.js";
 
 import registerRouter from "./register.view.js";
 import formRouter from "./form.view.js";
+import sessionsRouter from "./sessions.view.js";
 
 const viewsRouter = Router();
 
@@ -53,5 +54,8 @@ viewsRouter.get("/products/form", (req, res, next) => {
     next(error);
   }
 });
+
+viewsRouter.use("/sessions", sessionsRouter);
+
 
 export default viewsRouter;
