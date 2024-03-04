@@ -80,9 +80,11 @@ sessionsRouter.post("/", async (req, res, next) => {
   }
 });
 
-//signout
+
+/*//signout
 sessionsRouter.post("/signout", async (req, res, next) => {
   try {
+    req.logout();
     return res.json({
       statusCode: 200,
       message: "Signed out",
@@ -90,7 +92,34 @@ sessionsRouter.post("/signout", async (req, res, next) => {
   } catch (error) {
     return next(error);
   }
-});
+});*/
+
+sessionsRouter.post(
+  "/signout",
+  passport.authenticate("signout", {
+    session: false,
+    failureRedirect: "/api/sessions/badauth",
+  }),
+  async (req, res, next) => {
+    try {
+      return res.json({
+        statusCode: 200,
+        message: "Logged out",
+        //session: req.session, no voy a devolver la sesion
+      });
+    } catch (error) {
+      return next(error);
+    }
+  }
+);
+
+
+
+
+
+
+
+
 
 sessionsRouter.get("/badauth", (req, res, next) => {
   try {

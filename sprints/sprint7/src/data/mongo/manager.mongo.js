@@ -105,7 +105,10 @@ class MongoManager {
   async readByEmail(email) {
     try {
       const one = await this.model.findOne({ email });
-      notFoundOne(one);
+      //notFoundOne(one);
+          //la funcion de utilidad aca No la tengo q implementar debido a q:_
+      //para el register necesito q retorne null en lugar de error
+      //para el login necesito q retorne el usuario en lugar de un error
       return one;
     } catch (error) {
       throw error;

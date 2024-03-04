@@ -22,7 +22,6 @@ passport.use(
         if (one) {
           done(null, false); //si el usuario existe no puedo re-registrarlo, x lo tanto la estrategia termina aca
         } else {
-          console.log('2222')
           let data = req.body;
           data.password = createHash(password);
           let user = await users.create(data);
@@ -48,27 +47,51 @@ passport.use(
     async (req, email, password, done) => {
       try {
         const user = await users.readByEmail(email);
-        if (user) {
-          const verify = verifyHash(password, user.password);
-          if (verify) {
-            //estos dos los comento xq voy a hacer q las sesiones las maneje jwt
-            //req.session.email = email;
-            //req.session.role = user.role;
-            const token = createToken({ email, role: user.role });  //crea el token con jwt
-            req.token = token;
-            return done(null, user);
-          } else {
-             done(null, false);
-          }
+        if (user && verifyHash(password, user.password)) {
+          //estos dos los comento xq voy a hacer q las sesiones las maneje jwt
+          //req.session.email = email;
+          //req.session.role = user.role;
+          
+          const token = createToken({ email, role: user.role });  //crea el token con jwt
+          console.log("creado el token");
+          req.token = token;
+          
+          return done(null, user);
         } else {
           return done(null, false);
         }
       } catch (error) {
-        next(error);
+        return done(error);
       }
     }
   )
 );
+
+passport.use(
+  "signout",
+  new LocalStrategy(
+    { passReqToCallback: true, usernameField: "email" },
+    async (req, email, password, done) => {
+      try {
+        const user = await users.readByEmail(email);
+        if (user && verifyHash(password, user.password)) {
+          //estos dos los comento xq voy a hacer q las sesiones las maneje jwt
+          //req.session.email = email;
+          //req.session.role = user.role;
+          req.logout()
+          return done(null, user);
+        } else {
+          return done(null, false);
+        }
+      } catch (error) {
+        return done(error);
+      }
+    }
+  )
+);
+
+
+
 
 //estategia de google:
 passport.use(
