@@ -13,6 +13,7 @@ import pathHandler from "./src/middlewares/pathHandler.mid.js";
 import __dirname from "./utils.js";
 import morgan from "morgan"; 
 import { engine } from "express-handlebars";
+import cookieParser from "cookie-parser";
 import socketUtils from "./src/utils/socket.utils.js";
 import expressSession from "express-session"
 //import productsRouter from "./src/routers/api/products.router.api.js";
@@ -53,6 +54,7 @@ server.use(express.json())
 server.use(express.urlencoded({ extended: true }))
 server.use(express.static(__dirname+"/public"))
 server.use(morgan("dev"))
+server.use(cookieParser(process.env.SECRET_KEY));
 /*server.use(
   expressSession({
     secret: process.env.SECRET_KEY,             // esta key puede ser la misma q la de las cookies, o puede ser distinta

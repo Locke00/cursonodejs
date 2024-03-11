@@ -11,7 +11,7 @@ passport.use(
   new LocalStrategy(
     { passReqToCallback: true, usernameField: "email" },
     async (req, email, password, done) => {
-      console.log('11111111')
+      //console.log('11111111')
       //async porque hare muchas consulas. si fuera en memoria no seria necesario el sync
       try {
         //verifico q el usuario no existe
@@ -53,9 +53,9 @@ passport.use(
           //req.session.role = user.role;
           
           const token = createToken({ email, role: user.role });  //crea el token con jwt
-          console.log("creado el token");
+          console.log(token);
+          //console.log("creado el token");
           req.token = token;
-          
           return done(null, user);
         } else {
           return done(null, false);

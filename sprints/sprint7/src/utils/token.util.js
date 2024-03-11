@@ -11,9 +11,9 @@ function createToken(data) {
 }
 
 //en header se suelen enviar autorizaciones
-function verifytoken(headers) {
+function verifytoken(token) {
   //headers es una de las propiedades de los requerimientos
-  const token = headers.token; //tengo q evaluar si existe y si es correcto
+  //const token = headers.headers.token; //tengo q evaluar si existe y si es correcto
   if (token) {
     const data = jwt.verify(token, process.env.SECRET); //sale un objeto q yo cifre con el createToken()
     //TAREA q pasa si no verifica (hay q mandar un error)
@@ -24,4 +24,19 @@ function verifytoken(headers) {
   throw error;
 }
 
+/*
+function verifytoken(headers) {
+  try {
+    const token = headers.token;
+    if (token) {
+      const data = jwt.verify(token, process.env.SECRET);
+      return data;
+    }
+    throw new Error("Token not provided");
+  } catch (error) {
+    console.error(error.message);
+    throw new Error("Invalid token");
+  }
+}
+*/
 export { createToken, verifytoken }

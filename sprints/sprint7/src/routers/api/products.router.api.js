@@ -3,12 +3,17 @@ import { Router } from "express";
 //import { pdo } from "../../data/mongo/manager.mongo.js";
 import { products } from "../../data/mongo/manager.mongo.js";
 
+import isAdmin from "../../middlewares/isAdmin.mid.js"
+import isAuth from "../../middlewares/isAuth.mid.js";
+
+
 const productsRouter = Router()
 
 //aca defino los endpoint (post, get, put, delete)
-productsRouter.post("/", async (req,res,next)=>{
+productsRouter.post("/", isAdmin, async (req,res,next)=>{
   try {
     const data = req.body;
+    //console.log(data);
     const response = await products.create(data);
     if (response === "title is required") {
       return res.json({

@@ -35,7 +35,7 @@ sessionsRouter.post(
 
 
 
-//login
+//login   //ej de usuario: franco3@gmail.com/hola1234
 //ya q passport se va a encargar de verificar el usuario y la contraseña
 //entonces login solo se va a encargar de manejar la respuesta:
 sessionsRouter.post(
@@ -46,12 +46,16 @@ sessionsRouter.post(
   }),
   async (req, res, next) => {
     try {
-      return res.json({
-        statusCode: 200,
-        message: "Logged in",
-        //session: req.session, no voy a devolver la sesion
-        token: req.token,
-      });
+      return res
+        .cookie("token", req.token, {        // el valor del token esta en el objeto requerimientos
+          maxAge: 7 * 24 * 60 * 60,
+          httpOnly: true,  // httpOnly: true   permite q no se pueda acceder a la cookie dsd el navegador
+        })   // esto permite q cuando se loguee bien al usuario se le cree el cookie 
+        .json({
+          statusCode: 200,
+          message: "Logged in",
+          //token: req.token  // no voy a enviar token x aqui, sino x el cookie
+        });
     } catch (error) {
       return next(error);
     }
@@ -94,26 +98,17 @@ sessionsRouter.post("/signout", async (req, res, next) => {
   }
 });*/
 
-sessionsRouter.post(
-  "/signout",
-  passport.authenticate("signout", {
-    session: false,
-    failureRedirect: "/api/sessions/badauth",
-  }),
-  async (req, res, next) => {
-    try {
-      return res.json({
-        statusCode: 200,
-        message: "Logged out",
-        //session: req.session, no voy a devolver la sesion
-      });
-    } catch (error) {
-      return next(error);
-    }
+sessionsRouter.post("/signout", async (req, res, next) => {
+  try {
+    return res.clearCookie("token").json({  //tengo q eliminar la cookie
+      statusCode: 200,
+      message: "Signed out",
+      //session: req.session, no voy a devolver la sesion
+    });
+  } catch (error) {
+    return next(error);
   }
-);
-
-
+});
 
 
 
@@ -138,7 +133,7 @@ sessionsRouter.get("/badauth", (req, res, next) => {
 //como lo definimos en el parametro callbackURL, de la estrategia de google, q esta en passport.mid.js
 //lo voy a probar con get para probarlo con la url en el navegador
 //DEBE SER UN POST PARA LO Q EJECUTE EL EVENTO DE CLICK EN EL BOTON DE GOOGLE
-sessionsRouter.get(
+sessionsRouter.post(
   "/google",
   passport.authenticate("google", { scope: ["email", "profile"] }) // cuando pongo asi el scope le digo q tome como parametro principal
   //el email, y q ponga todos los datos en profile
