@@ -136,7 +136,7 @@ class MongoManager {
   async readOne(id) {
     try {
       //el profe agregó el .lean(), pero no se para q si lo mismo funca
-      const one = await this.model.findById(id);//.lean();
+      const one = await this.model.findById(id).lean();//.lean();
       //console.log("---start---");
       //console.log(one);
       //console.log("---end---");

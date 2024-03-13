@@ -108,8 +108,9 @@ passport.use(
       //tb da un accessToken y refreshToken(me los devuelve para q los use en caso de necesidad)
       try {
         console.log(profile);
-        let user = await users.readByEmail(profile.id); // primero veo si ya el usuario se creo anteriormente
+        let user = await users.readByEmail(profile.id+"gmail.com"); // primero veo si ya el usuario se creo anteriormente
         //Ahora vamos a guardar los datos del requerimiento con datos de la session
+        console.log(profile.id);
         if (user) {
           //primero lleno la session
           req.session.email = user.email; //(o en su lugar puedo poner profile.id, cualquiera va bien )
@@ -119,7 +120,7 @@ passport.use(
           // si no existe el usuario, lo registro y lo logueo
           user = {
             // primero completo los valores del usuario
-            email: profile.id, //esta es la propiedad q mas me interesa
+            email: profile.id + "@gmail.com", //esta es la propiedad q mas me interesa
             name: profile.name.givenName,
             lastName: profile.name.familyName,
             photo: profile.coverPhoto,
@@ -127,8 +128,8 @@ passport.use(
             password: createHash(profile.id), //mas recomendado
           };
           user = await users.create(user); //creo el usuario
-          req.session.email = user.email; //pongo sus datos como variable de sesion
-          req.session.role = user.role;
+          //req.session.email = user.email; //pongo sus datos como variable de sesion
+          //req.session.role = user.role;
           return done(null, user);
         }
       } catch (error) {
