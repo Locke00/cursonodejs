@@ -41,7 +41,7 @@ server.set("view engine", "handlebars");
 server.set("views", __dirname + "/src/views");
 
 //middlewares
-server.use(cookieParser(process.env.SECRET_KEY));
+server.use(cookieParser(process.env.SECRET_KEY));   //para poder usar cookies
 server.use(
   expressSession({
     secret: process.env.SECRET_KEY,             // esta key puede ser la misma q la de las cookies, o puede ser distinta

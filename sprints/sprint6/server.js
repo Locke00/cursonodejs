@@ -16,6 +16,8 @@ import { engine } from "express-handlebars";
 import socketUtils from "./src/utils/socket.utils.js";
 import expressSession from "express-session"
 //import productsRouter from "./src/routers/api/products.router.api.js";
+import MongoStore from "connect-mongo"
+
 import { log } from "console";
 import dbConnection from "./src/utils/dbConnection.utils.js";
 
@@ -58,6 +60,19 @@ server.use(
     saveUninitialized: true,        // permite tener una sesion vacia iniciada
     cookie: { maxAge: 6000 }
   })
+)
+
+
+//MONGO STORE
+server.use(expressSession({
+  secret: process.env.SECRET_KEY,             // esta key puede ser la misma q la de las cookies, o puede ser distinta
+  resave: true,    //permite q la session del usuario tdvia este activa aunq el usuario haya cerrado la pestaña
+  saveUninitialized: true,        // permite tener una sesion vacia iniciada
+  store: new MongoStore({
+    ttl: 100,          // chequear la unidad del ttl
+    mongoUrl: process.env.DB_LINK
+  })
+})
 )
 
 
