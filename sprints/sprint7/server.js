@@ -21,6 +21,7 @@ import MongoStore from "connect-mongo"
 
 import { log } from "console";
 import dbConnection from "./src/utils/dbConnection.utils.js";
+import userDataMiddleware from "./src/middlewares/userData.mid.js";
 
 
 
@@ -55,6 +56,7 @@ server.use(express.urlencoded({ extended: true }))
 server.use(express.static(__dirname+"/public"))
 server.use(morgan("dev"))
 server.use(cookieParser(process.env.SECRET_KEY));
+server.use(userDataMiddleware)
 /*server.use(
   expressSession({
     secret: process.env.SECRET_KEY,             // esta key puede ser la misma q la de las cookies, o puede ser distinta
