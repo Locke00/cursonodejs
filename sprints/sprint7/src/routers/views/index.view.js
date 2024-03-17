@@ -7,6 +7,8 @@ import { products } from "../../data/mongo/manager.mongo.js";
 //import registerRouter from "./register.view.js";
 import formRouter from "./form.view.js";
 import sessionsRouter from "./sessions.view.js";
+import ordersViewRouter from "./orders.view.js";
+
 
 const viewsRouter = Router();
 
@@ -84,13 +86,16 @@ viewsRouter.get("/products/form", (req, res, next) => {
 viewsRouter.use("/auth", sessionsRouter);
 
 
+viewsRouter.use("/orders", ordersViewRouter);
+
+/*
 viewsRouter.get("/orders", (req, res, next) => {
   try {
     return res.render("orders", { title: "Orders" });
   } catch (error) {
     next(error);
   }
-});
+});*/
 
 
 export default viewsRouter;

@@ -45,12 +45,17 @@ ordersRouter.get("/total/:uid", async(req, res, next)=> {
 
 ordersRouter.get("/",async (req,res,next)=>{
   try {
+//    console.log('aaaa');
     let filter = {}    //este tiene q ser let
-    if (req.query.user_id) {
+/*    if (req.query.user_id) {
       filter = { user_id: req.query.user_id }
-
+    }*/
+    if (req.query.user_id) {
+      filter.user_id = req.query.user_id;
     }
+
     const all = await orders.read({ filter })
+    //console.log(all);
     return res.json({
       statusCode: 200,
       response: all
@@ -61,8 +66,9 @@ ordersRouter.get("/",async (req,res,next)=>{
 })
 ordersRouter.get("/:oid",async (req,res,next)=>{
   try {
+    //console.log('bbb');
     const { oid } = req.params;
-    const one = orders.readOne(oid);
+    const one = await orders.readOne(oid);
     return res.status(200).json(one);
   } catch (error) {
     return next(error)  //indica q lo dejo pasar al middleware de errores
