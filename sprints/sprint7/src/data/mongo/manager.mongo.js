@@ -22,7 +22,7 @@ class MongoManager {
   }
 
 
-  /*
+  
   // a este read le voy a poner un filtro y un ordenamiento, x eso le paso parametro)
   async read({ filter, orderAndPaginate }) {
     try {
@@ -56,7 +56,9 @@ class MongoManager {
     } catch (error) {
       throw error;
     }
-  }*/
+  }
+  /*
+  //este no filtra bien, la cantidad de elementos
   async read({ filter, options }) {
     try {
       const all = await this.model.paginate(filter, options);
@@ -69,7 +71,7 @@ class MongoManager {
     } catch (error) {
       throw error;
     }
-  }
+  }*/
 
 
   async report(uid) {

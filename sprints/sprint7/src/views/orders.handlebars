@@ -4,7 +4,7 @@
     message
   {{else}}
     <section
-      id="movies"
+      id="products"
       class="d-flex flex-column justify-content-center align-items-center m-auto mt-2 mb-4 bg-light"
       style="width: 360px;"
     >
@@ -23,22 +23,22 @@
       {{#each orders}}
         <article class="w-100 d-flex border border-danger">
           <img
-            src={{this.event_id.poster}}
+            src={{this.product_id.photo}}
             style="width: 100px; heigth: 100px"
             style="height: 100px; width: 100px"
             class="object-fit-cover m-0"
-            alt="{{this.event_id.title}}"
+            alt="{{this.product_id.title}}"
           />
           <p
             class="d-flex justify-content-start align-items-center m-0 p-2"
             style="width: 100px;"
-          >{{this.event_id.title}}
+          >{{this.product_id.title}}
             <br />
-            {{this.event_id.place}}</p>
+            {{this.product_id.stock}}</p>
           <p
             class="d-flex justify-content-end align-items-center m-0 p-2"
             style="width: 100px;"
-          >USD {{this.event_id.price}}</p>
+          >USD {{this.product_id.price}}</p>
           <span
             class="d-flex justify-content-center align-items-center m-0 p-2"
             style="width: 60px;"
