@@ -46,6 +46,7 @@ productsRouter.get("/",async (req,res,next)=>{
       page: req.query.page || 1,         //q arranque x defecto en la pagina 1
       //sort: { title: 1 }    //q lo ordene x nombre   (si quisiera ordenar x email: sort: { name: 1 })
     }
+    //console.log(req.query.limit);
 
     if (req.query.title==="desc") {        //estos considionales son necesarios para cuando hay q poner en particuplar 
       orderAndPaginate.sort.title = -1

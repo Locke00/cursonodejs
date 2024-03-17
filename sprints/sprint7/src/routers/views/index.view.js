@@ -7,7 +7,7 @@ import { products } from "../../data/mongo/manager.mongo.js";
 //import registerRouter from "./register.view.js";
 import formRouter from "./form.view.js";
 import sessionsRouter from "./sessions.view.js";
-import ordersViewRouter from "./orders.view.js";
+import orderRouter from "./order.view.js";
 
 
 const viewsRouter = Router();
@@ -86,7 +86,7 @@ viewsRouter.get("/products/form", (req, res, next) => {
 viewsRouter.use("/auth", sessionsRouter);
 
 
-viewsRouter.use("/orders", ordersViewRouter);
+viewsRouter.use("/orders", orderRouter);
 
 /*
 viewsRouter.get("/orders", (req, res, next) => {

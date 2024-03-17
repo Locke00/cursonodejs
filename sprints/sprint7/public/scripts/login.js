@@ -19,7 +19,7 @@ selector.addEventListener("click", async () => {  //cada click en el boton va a 
     alert(response.message)
     if (response.statusCode === 200) {
       location.replace("/")
-      localStorage.setItem("token", response.token)  //va a setear ese token en el localStorage
+      //localStorage.setItem("token", response.token)  //va a setear ese token en el localStorage  // esto lo comento xq voy a guardar el token en las cookies
       //esto lo vemos en el navegador->InspectorDeCodigo->Application->Storage->LocalStorage
     }
           
