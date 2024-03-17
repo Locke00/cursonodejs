@@ -21,6 +21,8 @@ class MongoManager {
     }
   }
 
+
+  /*
   // a este read le voy a poner un filtro y un ordenamiento, x eso le paso parametro)
   async read({ filter, orderAndPaginate }) {
     try {
@@ -54,7 +56,21 @@ class MongoManager {
     } catch (error) {
       throw error;
     }
+  }*/
+  async read({ filter, options }) {
+    try {
+      const all = await this.model.paginate(filter, options);
+      if (all.totalDocs === 0) {
+        const error = new Error("There aren't any document");
+        error.statusCode = 404;
+        throw error;
+      }
+      return all;
+    } catch (error) {
+      throw error;
+    }
   }
+
 
   async report(uid) {
     try {
