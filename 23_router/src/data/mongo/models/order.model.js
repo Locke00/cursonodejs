@@ -1,4 +1,5 @@
 import { model, Schema, Types } from "mongoose"
+//import mongoosePaginate from "mongoose-paginate-v2"
 
 const collection = "orders"
 const schema = new Schema({
@@ -29,6 +30,8 @@ const schema = new Schema({
 
         //.populate("user_id","-password -createdAt -updatedAt -__v")  // '-', para q esos campos no se agreguen
         //.populate("event_id","name planes price")   // para q esos campos si se agregen
+
+//schema.plugin(mongoosePaginate)
 schema.pre("find", function(){ this.populate("user_id","-password -createdAt -updatedAt -__v") })   // aqui el callback tiene q ser una funcion anonima tradicional (no funcion flecha)
 schema.pre("find", function(){ this.populate("event_id","name planes price") })
 

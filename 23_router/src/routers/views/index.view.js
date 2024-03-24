@@ -14,7 +14,7 @@ export default class ViewsRouter extends CustomRouter {// ViewsRouter en mayuscu
     this.router.use("/sessions", sessionsRouter);
 
     //viewsRouter.get("/",     ->     this.read("/", 
-    this.read("/", (req, res, next) => { //aqui cambio el get x el read
+    this.read("/",["PUBLIC"], (req, res, next) => { //aqui cambio el get x el read
       try {   
         const date = new Date();
         const all = events.readEvents();

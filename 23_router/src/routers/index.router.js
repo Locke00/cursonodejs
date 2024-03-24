@@ -1,6 +1,6 @@
 
+//import { Router } from "express"; reemplazamos esta linea x la de abajo ya q usaremos CustomRouter
 import CustomRouter from "./CustomRouter.js";
-//import { Router } from "express";
 
 //import apiRouter from "./api/index.router.api.js"
 import ApiRouter from "./api/index.router.api.js"
@@ -8,7 +8,7 @@ import ViewsRouter from "./views/index.view.js" //en mayuscula xq es la clase
 
 
 //api es una instancia de la clase
-const api = new ApiRouter()  //api es una instancia de la clase
+const api = new       ApiRouter()  //api es una instancia de la clase
 const apiRouter = api.getRouter()  // devuelve en enroutador de la api
 const views = new ViewsRouter()
 const viewsRouter = views.getRouter()

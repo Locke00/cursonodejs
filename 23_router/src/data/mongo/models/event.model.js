@@ -1,4 +1,5 @@
 import { model, Schema } from "mongoose";
+import mongoosePaginate from "mongoose-paginate-v2"
 
 const collection = "events";
 const schema = new Schema(
@@ -28,5 +29,6 @@ const schema = new Schema(
   }
 );
 
+schema.plugin(mongoosePaginate)
 const Event = model(collection, schema);
 export default Event;
