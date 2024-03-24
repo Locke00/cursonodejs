@@ -1,16 +1,18 @@
 import passport from "passport";
 import { Strategy as LocalStrategy } from "passport-local";
 import { Strategy as GoogleStrategy } from "passport-google-oauth2";
+import { Strategy as GithubStrategy } from "passport-github2";
 import { createHash, verifyHash } from "../utils/hash.utils.js";
 import { users } from "../data/mongo/manager.mongo.js";
 import { createToken } from "../utils/token.util.js";
-const { GOOGLE_ID, GOOGLE_CLIENT } = process.env;
+const { GOOGLE_ID, GOOGLE_CLIENT, GITHUB_ID, GITHUB_CLIENT } = process.env;
 
 passport.use(
   "register",
   new LocalStrategy(
     { passReqToCallback: true, usernameField: "email" },
     async (req, email, password, done) => {
+      console.log('11111111')
       //async porque hare muchas consulas. si fuera en memoria no seria necesario el sync
       try {
         //verifico q el usuario no existe
@@ -43,54 +45,107 @@ passport.use(
         if (user) {
           const verify = verifyHash(password, user.password);
           if (verify) {
+            //estos dos los comento xq voy a hacer q las sesiones las maneje jwt. en el token voy a tener esos datos
             //req.session.email = email;
             //req.session.role = user.role;
-            const token = createToken({ email, role: user.role })
-            req.token = token
+            const token = createToken({ email, role: user.role });  //crea el token con jwt
+            req.token = token;      //el endpoint de alguna forma tiene q poder acceder a ese token, para poder enviarselo al cliente
             return done(null, user);
           } else {
-            done(null, false);
+             done(null, false);
           }
         } else {
           return done(null, false);
         }
       } catch (error) {
-        next(error);
+        done(error);
       }
     }
   )
 );
 
+//estategia de google:
 passport.use(
   "google",
   new GoogleStrategy(
-    {
-      passReqToCallback: true,
+    {                 // objeto de configuracion
+      passReqToCallback: true, //true para q la estrategia tenga acceso al objeto de requerimientos
       clientID: GOOGLE_ID,
       clientSecret: GOOGLE_CLIENT,
       callbackURL: "http://localhost:8080/api/sessions/google/callback",
-    },
-    async (req, accessToken, refreshToken, profile, done) => { // en profile google me va a mandar unmonton de datos
+    },  //En esta estrategia de google, si existe el usuario te logueo. Si no existe, te lo creo y te logueo
+    async (req, accessToken, refreshToken, profile, done) => {   //callback de la estrategi
+      //tb da un accessToken y refreshToken(me los devuelve para q los use en caso de necesidad)
+      // en profile google me va a mandar unmonton de datos del usuario
       try {
         console.log(profile);
-        let user = await users.readByEmail(profile.id);
+        let user = await users.readByEmail(profile.id); // primero veo si ya el usuario se creo anteriormente
         //Ahora vamos a guardar los datos del requerimiento con datos de la session
-        if (user) {
-          //primero lleno la session
-          req.session.email = user.email; //(o en su lugar puedo poner profile.id, cualquiera va bien )
+        if (user) {  // si el usuario existe:
+          //primero lleno los datos de la session
+          req.session.email = user.email; //(o en su lugar puedo poner profile.id, cualquiera va bien ). voy a usar el mail como id
           req.session.role = user.role;
-          return done(null, user);
+          return done(null, user); // si existe el usuario, lo logueo. devuelvo nulo y datos del usuario
         } else {
+          // si no existe el usuario, lo registro y lo logueo
           user = {
-            email: profile.id,
+            // primero completo los valores del usuario
+            email: profile.id, //esta es la propiedad q mas me interesa
             name: profile.name.givenName,
             lastName: profile.name.familyName,
             photo: profile.coverPhoto,
             //password: createHash("hola1234")
             password: createHash(profile.id), //mas recomendado
           };
-          user = await users.create(user);
-          req.session.email = user.email;
+          user = await users.create(user); //creo el usuario
+          req.session.email = user.email; //inicio la sesion, o sea, seteo las variables de sesion con los datos del usuario
+          req.session.role = user.role;
+          return done(null, user);
+        }
+      } catch (error) {
+        return done(error);
+      }
+    }
+  )
+);
+
+//estategia de github:  //aqui falta completar bien los datos de profile.
+//se los puede ir agregando viendo lo q devuelva console.log(profile);
+//mas info sobre esta implementacion hay en la ppt vieja
+passport.use(
+  "github",
+  new GoogleStrategy(
+    {
+      passReqToCallback: true, //true para q la estrategia tenga acceso al objeto de requerimientos
+      clientID: GITHUB_ID,
+      clientSecret: GITHUB_CLIENT,
+      callbackURL: "http://localhost:8080/api/sessions/github/callback",
+    },
+    async (req, accessToken, refreshToken, profile, done) => {
+      // en profile google me va a mandar unmonton de datos del usuario
+      //tb da un accessToken y refreshToken(me los devuelve para q los use en caso de necesidad)
+      try {
+        console.log(profile);
+        let user = await users.readByEmail(profile.id); // primero veo si ya el usuario se creo anteriormente
+        //Ahora vamos a guardar los datos del requerimiento con datos de la session
+        if (user) {
+          //primero lleno la session
+          req.session.email = user.email; //(o en su lugar puedo poner profile.id, cualquiera va bien )
+          req.session.role = user.role;
+          return done(null, user); // si existe el usuario, lo logueo
+        } else {
+          // si no existe el usuario, lo registro y lo logueo
+          user = {
+            // primero completo los valores del usuario
+            email: profile.id, //esta es la propiedad q mas me interesa
+            name: profile.name.givenName,
+            lastName: profile.name.familyName,
+            photo: profile.coverPhoto,
+            //password: createHash("hola1234")
+            password: createHash(profile.id), //mas recomendado
+          };
+          user = await users.create(user); //creo el usuario
+          req.session.email = user.email; //pongo sus datos como variable de sesion
           req.session.role = user.role;
           return done(null, user);
         }

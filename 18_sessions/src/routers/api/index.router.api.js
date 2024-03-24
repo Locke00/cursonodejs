@@ -3,7 +3,7 @@ import usersRouter from "./users.router.api.js";
 import eventsRouter from "./events.router.api.js";
 import ordersRouter from "./orders.router.api.js";
 import cookiesRouter from "./cookies.router.api.js";
-import sessionsRouter from "./sessions.api.router.api.js";
+import sessionsRouter from "./sessions.router.api.js";
 
 const apiRouter = Router();
 
@@ -11,7 +11,7 @@ const apiRouter = Router();
 apiRouter.use("/users", usersRouter);
 apiRouter.use("/events", eventsRouter);
 apiRouter.use("/orders", ordersRouter);
-//apiRouter.use("/cookies", cookiesRouter);
+apiRouter.use("/cookies", cookiesRouter);
 //apiRouter.use("/auth", sessionsRouter);   //es mas usado el nombre auth en lugar de sessions, pero nosotros usaremos sessions
 apiRouter.use("/sessions", sessionsRouter);
 
