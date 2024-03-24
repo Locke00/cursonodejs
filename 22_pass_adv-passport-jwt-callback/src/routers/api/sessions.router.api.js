@@ -88,7 +88,7 @@ sessionsRouter.post(
     session: false,
     failureRedirect: "/api/sessions/signout/cb",
   }),*/
-  passCallBgit ack("jwt"),
+  passCallBack("jwt"),
   async (req, res, next) => {
     try {
       return res.clearCookie("token").json({
