@@ -16,7 +16,7 @@ selector.addEventListener("click", async () => {  //cada click en el boton va a 
     let response = await fetch("/api/sessions/login", opts);
     response = await response.json()
     console.log(response);
-    alert(response.message)
+    alert(response.response)
     if (response.statusCode === 200) {
       location.replace("/")
       //localStorage.setItem("token", response.token)  //va a setear ese token en el localStorage  // esto lo comento xq voy a guardar el token en las cookies

@@ -1,6 +1,7 @@
 import passport from "passport";
 import { Strategy as LocalStrategy } from "passport-local";
 import { Strategy as GoogleStrategy } from "passport-google-oauth2";
+import { ExtractJwt, Strategy as JwtStrategy } from "passport-jwt";
 import { createHash, verifyHash } from "../utils/hash.utils.js";
 import { users } from "../data/mongo/manager.mongo.js";
 import { createToken } from "../utils/token.util.js";
@@ -138,6 +139,30 @@ passport.use(
     }
   )
 );
+
+passport.use(
+  "jwt", // en nombre q le voy a poner a la estrategia. luego va el constructor de la estrategia el cual recibe 2 parametros
+  new JwtStrategy({       //el constructor recibe 2 parametros. el objeto de configuracion
+      jwtFromRequest: ExtractJwt.fromExtractors([(req) => req?.cookies["token"]]),  //se fija si en req hay una propiedad cookies, q se llame token
+      secretOrKey: process.env.SECRET,
+    },
+    async (payload, done) => {  //el 2do parametro q recibe es una callback asyncrona. (asi como la llame payload, le podria haber puestro otro nombre)
+      try {
+        const user = await users.readByEmail(payload.email);  //primero busco el usuario en el manager de usuarios
+        if (user) {
+          user.password = null;           //le protejo la contraseña poniendole como null
+          return done(null, user);        //agrega al objeto de requerimientos una propiedad user con los datos del usuario q encontré
+        } else {
+          return done(null, false);  // cuando no existe el usuario
+        }
+      } catch (error) {
+        return done(error);
+      }
+    }
+  )
+);
+//payload es el resultado de la carga de los datos destokenizados. dentro del payload tengo la propiedad email
+
 
 
 export default passport;

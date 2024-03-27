@@ -11,7 +11,7 @@ document.querySelector("#signout").addEventListener("click", async () => {
     let response = await fetch("/api/sessions/signout", opts);
     response = await response.json();
     if (response.statusCode === 200) {
-      alert(response.message)
+      alert(response.response)
       //localStorage.removeItem("token");  tampoco creo q deberia ir esto ya q no lo estoy guardando en el localStorage
       location.replace("/");
     }

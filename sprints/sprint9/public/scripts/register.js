@@ -18,8 +18,16 @@ selector.addEventListener("click", async () => {  //cada click en el boton va a 
     };
     let response = await fetch("/api/sessions/register", opts);
     response = await response.json()
+    console.log(response);
+    if (response.statusCode === 201){
+      alert("Usuario creado")
+      location.replace("/auth/login")
+    } else {
+      alert("ERROR: " + response.message);
+    }
+       
     //console.log(response);
-    alert(response.message)
+    //alert(response.message)
     //location.replace("/sessions/login")   //si existe la sesion, q me redirija hacia la pagina de inicio
     //en la linea de arriba se deberia redirigir a login si se registro con exito, pero hay q completar para q funcione bien, xq la linea de arriba no hace esa verificacion
   } catch (error) {

@@ -1,109 +1,57 @@
-import { Router } from "express";
+import CustomRouter from "../CustomRouter.js";
 //import orders from "../../data/fs/orderFs.manager.js"
-import { orders } from "../../data/mongo/manager.mongo.js"; //importo el manager de ordenes
+//import { orders } from "../../data/mongo/manager.mongo.js"; //importo el manager de ordenes
 
 
-const ordersRouter = Router()
+import {
+  create,
+  read,
+  report,
+  readOne,
+  update,
+  destroy,
+} from "../../controllers/orders.controller.js";
 
-//aca defino los endpoint (post, get, put, delete)
-ordersRouter.post("/", async (req,res,next)=>{
-  try {
-    const data = req.body;
-    const response = await orders.create(data);
-    if (response === "title is required") {
-      return res.json({
-        statusCode: 400,
-        message: response,
-      });
-    } else {
-      return res.json({
-        statusCode: 201,
-        response, //cuando el nombre de la propiedad es igual al nombre de la variable
-                  //directamente pongo el nombre de la variable(a esto se le llama estructuracion)
-        //response: response es lo mismo q lo de arriba
-        //el codigo 200 envia una respuesta,
-        //el codigo 201 no envia ninguna respuesta
-      });
-    }
-  } catch (error) {
-    return next(error)  //indica q lo dejo pasar al middleware de errores
+
+class OrdersRouter extends CustomRouter {
+  init(){//aca defino los endpoint (post, get, put, delete)
+    this.create("/",["USER","PREM"], create)
+    this.read("/",["PUBLIC"], read)
+    this.read("/total/:uid",["PUBLIC"], report)
+    this.read("/:oid",["PUBLIC"], readOne)
+    this.update("/:oid",["USER","PREM","ADMIN"], update);
+    this.destroy("/:oid",["USER","PREM","ADMIN"], destroy)
   }
-})
 
-ordersRouter.get("/total/:uid", async(req, res, next)=> {
-  try {
-    const { uid } = req.params
-    const report = await orders.report(uid)
-    return res.json({
-      statusCode: 200,
-      response: report
-    })
-  } catch (error) {
-    throw error
-  }
-})
 
-ordersRouter.get("/",async (req,res,next)=>{
+}
+
+const ordersRouter = new OrdersRouter();
+export default ordersRouter.getRouter();
+
+
+
+
+/*
+this.read("/:uid", async(req, res, next)=>{
   try {
-//    console.log('aaaa');
-    let filter = {}    //este tiene q ser let
-/*    if (req.query.user_id) {
-      filter = { user_id: req.query.user_id }
-    }*/
-    if (req.query.user_id) {
-      filter.user_id = req.query.user_id;
+    // uid = uid.trim();
+    //const filter = { user_id: uid }
+    //const all = await orders.read({ filter })
+    //return res.success200(all)
+    let filter = {}    
+    if (req.params.uid) {
+      let { uid } = req.params
+      uid = uid.toString().trim();
+      filter.user_id = uid;
     }
 
     const all = await orders.read({ filter })
-    //console.log(all);
-    return res.json({
-      statusCode: 200,
-      response: all
-    })
+    return res.success200(all)
+
   } catch (error) {
-    return next(error)
+    throw error
   }
+
 })
-ordersRouter.get("/:oid",async (req,res,next)=>{
-  try {
-    //console.log('bbb');
-    const { oid } = req.params;
-    const one = await orders.readOne(oid);
-    return res.status(200).json(one);
-  } catch (error) {
-    return next(error)  //indica q lo dejo pasar al middleware de errores
-  }
-})
-
-
-ordersRouter.put("/:oid", async (req, res, next) => {
-  try {
-    const { oid } = req.params;
-    const data = req.body
-    const response = await orders.update(oid, data);
-    return res.json({
-      statusCode: 200,
-      response: response,
-    });
-  } catch (error) {
-    return next(error);
-  }
-});
-
-
-ordersRouter.delete("/:oid",async(req,res)=>{
-  try {
-    const { oid } = req.params;
-    const response = await orders.destroy(oid);
-    return res.json({
-      statusCode: 200,
-      response,
-    });
-  } catch (error) {
-    return next(error);
-  }
-})
-
-
-
-export default ordersRouter
+*/

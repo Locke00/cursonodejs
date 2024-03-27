@@ -1,5 +1,7 @@
 
-import "dotenv/config.js"
+
+//import "dotenv/config.js"; // importar la libreria de dotenv. ya no es necesario xq lo hago dsd env
+import env from "./src/utils/env.util.js"
 import express from "express"
 import { createServer } from "http";  // la funcion para crear el server
 import { Server } from "socket.io";   // la clase para crear un socket server
@@ -7,7 +9,8 @@ import { Server } from "socket.io";   // la clase para crear un socket server
 
 
 
-import router from "./src/routers/index.router.js"
+//import router from "./src/routers/index.router.js"
+import IndexRouter from "./src/routers/index.router.js";
 import errorHandler from "./src/middlewares/errorHandler.mid.js";
 import pathHandler from "./src/middlewares/pathHandler.mid.js";
 import __dirname from "./utils.js";
@@ -18,6 +21,8 @@ import socketUtils from "./src/utils/socket.utils.js";
 import expressSession from "express-session"
 //import productsRouter from "./src/routers/api/products.router.api.js";
 import MongoStore from "connect-mongo"
+
+import args from "./src/utils/args.util.js"
 
 import { log } from "console";
 import dbConnection from "./src/utils/dbConnection.utils.js";
@@ -82,11 +87,14 @@ server.use(expressSession({
 
 
 
+//server.use("/",router)            //q use todas las rutas q voy a definir en ese enrutador principal
+const router = new IndexRouter() //router es una instancia en enrutador, no es un enrutador con todos los endpoints
+server.use("/", router.getRouter());
 
 
-server.use("/",router)            //q use todas las rutas q voy a definir en ese enrutador principal
 server.use(errorHandler)
 server.use(pathHandler)
 
 
 export { socketServer }
+
