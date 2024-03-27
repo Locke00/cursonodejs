@@ -20,6 +20,8 @@ import expressSession from "express-session"
 //import productsRouter from "./src/routers/api/products.router.api.js";
 import MongoStore from "connect-mongo"
 
+import args from "./src/utils/args.util.js"
+
 import { log } from "console";
 import dbConnection from "./src/utils/dbConnection.utils.js";
 import userDataMiddleware from "./src/middlewares/userData.mid.js";
@@ -93,3 +95,4 @@ server.use(pathHandler)
 
 
 export { socketServer }
+
