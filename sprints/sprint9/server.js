@@ -21,8 +21,8 @@ import socketUtils from "./src/utils/socket.utils.js";
 import expressSession from "express-session"
 //import productsRouter from "./src/routers/api/products.router.api.js";
 import MongoStore from "connect-mongo"
-
 import args from "./src/utils/args.util.js"
+import cors from "cors";
 
 import { log } from "console";
 import dbConnection from "./src/utils/dbConnection.utils.js";
@@ -62,6 +62,12 @@ server.use(express.static(__dirname+"/public"))
 server.use(morgan("dev"))
 server.use(cookieParser(process.env.SECRET_KEY));
 server.use(userDataMiddleware)
+server.use(
+  cors({
+        origin: true,
+        credentials: true
+   })
+);
 /*server.use(
   expressSession({
     secret: process.env.SECRET_KEY,             // esta key puede ser la misma q la de las cookies, o puede ser distinta
