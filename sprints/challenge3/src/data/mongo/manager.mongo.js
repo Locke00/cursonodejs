@@ -3,7 +3,7 @@
 import User from "./models/user.model.js";
 import Product from "./models/product.model.js";
 import Order from "./models/order.model.js";
-import notFoundOne from "../../utils/notFountOne.utils.js";
+import notFoundOne from "../../utils/notFoundOne.util.js";
 import { Types } from "mongoose";
 
 class MongoManager {
@@ -207,12 +207,12 @@ class MongoManager {
   }
 }
 
-const users = new MongoManager(User);
-const products = new MongoManager(Product);
-const orders = new MongoManager(Order);
-
-export { users, products, orders };
+//const users = new MongoManager(User);
+//const products = new MongoManager(Product);
+//const orders = new MongoManager(Order);
+//
+//export { users, products, orders };
 
 //alternativamente se puede hacer un export default del manager,
 //pero lo mejor, es exportar las instanacias:
-//export default MongoManager;
+export default MongoManager;

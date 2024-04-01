@@ -1,5 +1,5 @@
 import CustomRouter from "../CustomRouter.js";
-//import orders from "../../data/fs/orderFs.manager.js"
+//import orders from "../../data/fs/orders.fs.manager.js"
 //import { orders } from "../../data/mongo/manager.mongo.js"; //importo el manager de ordenes
 
 
@@ -15,7 +15,7 @@ import {
 
 class OrdersRouter extends CustomRouter {
   init(){//aca defino los endpoint (post, get, put, delete)
-    this.create("/",["USER","PREM"], create)
+    this.create("/",["USER","PREM","ADMIN"], create)
     this.read("/",["PUBLIC"], read)
     this.read("/total/:uid",["PUBLIC"], report)
     this.read("/:oid",["PUBLIC"], readOne)

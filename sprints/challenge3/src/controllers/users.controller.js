@@ -3,6 +3,7 @@ import service from "../services/users.service.js";
 class UsersController {
   constructor() {
     this.service = service;
+    
   }
   create = async (req, res, next) => {
     try {

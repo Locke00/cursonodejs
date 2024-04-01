@@ -1,6 +1,6 @@
 // Archivo: middlewares/userData.middleware.js
 import { verifytoken } from '../utils/token.util.js';
-import { users } from '../data/mongo/manager.mongo.js';
+import users from '../data/mongo/users.mongo.js';
 
 async function userDataMiddleware(req, res, next) {
   try {

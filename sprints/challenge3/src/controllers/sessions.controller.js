@@ -47,6 +47,7 @@ class SessionsController {
   };
   me = async (req, res, next) => {
     try {
+      console.log(req.user);
       const user = {
         email: req.user.email,
         role: req.user.role,

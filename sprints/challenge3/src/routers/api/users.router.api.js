@@ -1,7 +1,7 @@
 
 import CustomRouter from "../CustomRouter.js";
 
-//import users from "../../data/fs/userFs.manager.js"
+//import users from "../../data/fs/users.fs.manager.js"
 //import { users } from "../../data/mongo/manager.mongo.js";
 //const usersRouter = Router()
 
@@ -18,12 +18,13 @@ import {
 
 class UsersRouter extends CustomRouter {
   init() {
+    //console.log('aaaa');
     //aca defino los endpoint (post, get, put, delete)
     this.create("/", ["PUBLIC"], create);
     this.read("/", ["PUBLIC"], read);
     this.read("/stats",  ["PUBLIC"], stats);
     this.read("/:uid",  ["PUBLIC"], readOne);
-    this.update("/:uid",  ["PREM"], update);
+    this.update("/:uid",  ["PREM","ADMIN"], update);
     this.destroy("/:uid",  ["ADMIN"], destroy);
   }
 }

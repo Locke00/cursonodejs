@@ -1,8 +1,8 @@
 
 //import {BSON} = require('bson')
 //import { Router } from "express";
-//import productsManager from "../../data/fs/productFs.manager.js";
-import { products } from "../../data/mongo/manager.mongo.js";
+//import productsManager from "../../data/fs/products.fs.manager.js";
+import products from "../../data/mongo/products.mongo.js";
 
 //import registerRouter from "./register.view.js";
 import formRouter from "./form.view.js";

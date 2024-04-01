@@ -8,6 +8,7 @@ class OrdersController {
     try {
       const data = req.body;  //los parametros se pueden enviar x body, params o query,. 
                     //cuando creo algo, x lo general se envia x body
+      console.log(req.user);
       data.user_id = req.user._id;
       const response = await this.service.create(data);
       return res.success201(response);

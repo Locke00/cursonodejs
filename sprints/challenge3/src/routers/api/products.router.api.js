@@ -1,6 +1,6 @@
 
-//import products from "../../data/fs/productFs.manager.js"
-import { products } from "../../data/mongo/manager.mongo.js";
+//import products from "../../data/fs/product.fs.manager.js"
+import products from "../../data/mongo/manager.mongo.js";
 
 
 import CustomRouter from "../CustomRouter.js";

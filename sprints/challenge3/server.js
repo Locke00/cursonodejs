@@ -25,7 +25,7 @@ import args from "./src/utils/args.util.js"
 import cors from "cors";
 
 import { log } from "console";
-import dbConnection from "./src/utils/dbConnection.utils.js";
+import dbConnection from "./src/utils/dbConnection.util.js";
 import userDataMiddleware from "./src/middlewares/userData.mid.js";
 
 

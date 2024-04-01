@@ -74,7 +74,7 @@ class SessionsRouter extends CustomRouter{
     );
 
     //me,   vamos a hacer un post para ver mis datos
-    this.create("/",["USER","PREM","ADMIN"], me);
+    this.create("/",["PUBLIC","USER","PREM","ADMIN"], me);
 
 
 

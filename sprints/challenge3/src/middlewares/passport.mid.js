@@ -3,7 +3,14 @@ import { Strategy as LocalStrategy } from "passport-local";
 import { Strategy as GoogleStrategy } from "passport-google-oauth2";
 import { ExtractJwt, Strategy as JwtStrategy } from "passport-jwt";
 import { createHash, verifyHash } from "../utils/hash.utils.js";
-import { users } from "../data/mongo/manager.mongo.js";
+//import users from "../data/mongo/manager.mongo.js";
+
+import dao from "../data/index.factory.js";
+const { users } = dao
+//import UserDTO from "../dto/user.dto.js";
+
+import service from "../services/users.service.js"
+
 import { createToken } from "../utils/token.util.js";
 const { GOOGLE_ID, GOOGLE_CLIENT } = process.env;
 
@@ -15,6 +22,8 @@ passport.use(
       //console.log('11111111')
       //async porque hare muchas consulas. si fuera en memoria no seria necesario el sync
       try {
+
+        
         //verifico q el usuario no existe
         //hasheo la contraseña
         //registra elusuario
@@ -25,8 +34,9 @@ passport.use(
         } else {
           let data = req.body;
           data.password = createHash(password);
-          let user = await users.create(data);
-          return done(null, user);
+          //let user = await users.create(data);
+          service.create(data)
+          return done(null, data);
         }
         //en caso contrario NO DEJO re-registrar
       } catch (error) {
@@ -48,6 +58,7 @@ passport.use(
     async (req, email, password, done) => {
       try {
         const user = await users.readByEmail(email);
+        console.log(user);
         if (user && verifyHash(password, user.password)) {
           //estos dos los comento xq voy a hacer q las sesiones las maneje jwt
           //req.session.email = email;
