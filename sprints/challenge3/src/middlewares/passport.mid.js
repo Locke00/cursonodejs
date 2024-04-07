@@ -13,6 +13,7 @@ import service from "../services/users.service.js"
 
 import { createToken } from "../utils/token.util.js";
 const { GOOGLE_ID, GOOGLE_CLIENT } = process.env;
+import repository from "../repositories/users.rep.js";
 
 passport.use(
   "register",
@@ -22,21 +23,21 @@ passport.use(
       //console.log('11111111')
       //async porque hare muchas consulas. si fuera en memoria no seria necesario el sync
       try {
-
-        
         //verifico q el usuario no existe
         //hasheo la contraseña
         //registra elusuario
         //let one = await users.readByEmail(req.body.email)   //let xq le tengo q cambiar la contraseña. puedo hacerlo alternativamente con la linea de abajo
-        let one = await users.readByEmail(email); //puedo buscar el email del requerimiento o de la misma callback(xq email === req.body.email)
+        let one = await repository.readByEmail(email); //puedo buscar el email del requerimiento o de la misma callback(xq email === req.body.email)
         if (one) {
-          done(null, false); //si el usuario existe no puedo re-registrarlo, x lo tanto la estrategia termina aca
+          ///console.log(one)
+          done(null, false, { statusCode: 401 }); //si el usuario existe no puedo re-registrarlo, x lo tanto la estrategia termina aca
         } else {
-          let data = req.body;
-          data.password = createHash(password);
+          ////let data = req.body;
+          ////data.password = createHash(password);
           //let user = await users.create(data);
-          service.create(data)
-          return done(null, data);
+          const user = await repository.create(req.body);
+          console.log(user);
+          return done(null, user);
         }
         //en caso contrario NO DEJO re-registrar
       } catch (error) {
@@ -59,7 +60,7 @@ passport.use(
       try {
         const user = await users.readByEmail(email);
         console.log(user);
-        if (user && verifyHash(password, user.password)) {
+        if (user?.verified && verifyHash(password, user.password)) {
           //estos dos los comento xq voy a hacer q las sesiones las maneje jwt
           //req.session.email = email;
           //req.session.role = user.role;

@@ -64,7 +64,7 @@ class UsersManager {
   }
   async update(uid, data) {
     try {
-      const one = UsersManager.#users.readOne(uid);
+      const one = await this.readOne(uid);
       if (one) {
         for (let each in data) {
           one[each] = data[each];

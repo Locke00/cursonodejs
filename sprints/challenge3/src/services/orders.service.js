@@ -1,6 +1,6 @@
 //import orders from "../data/mongo/manager.mongo.js";
 import repository from "../repositories/orders.rep.js";
-import OrderDTO from "../dto/order.dto.js";
+//import OrderDTO from "../dto/order.dto.js";
 
 
 class OrdersService {
@@ -8,7 +8,7 @@ class OrdersService {
     this.repository = repository;
   }
   create = async (data) => {
-    data = new OrderDTO(data)
+    //data = new OrderDTO(data)
     const response = await this.repository.create(data);
     return response
   }

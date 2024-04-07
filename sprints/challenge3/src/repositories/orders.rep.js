@@ -1,5 +1,6 @@
 ///import OrderDTO from "../dto/order.dto.js";
 import dao from "../data/index.factory.js";
+import OrderDTO from "../dto/order.dto.js";
 
 const { orders } = dao;
 
@@ -8,6 +9,7 @@ class OrdersRep {
     this.model = orders;
   }
   create = async (data) => {
+    data = new OrderDTO(data)
     const response = await this.model.create(data);
     return response;
   };

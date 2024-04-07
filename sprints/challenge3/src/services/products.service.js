@@ -2,7 +2,7 @@
 //import dao from "../data/index.factory.js";
 //const { products } = dao
 import repository from "../repositories/products.rep.js";
-import ProductDTO from "../dto/product.dto.js";
+//import ProductDTO from "../dto/product.dto.js";
 
 
 
@@ -12,7 +12,7 @@ class ProductsService {
   }
   create = async (data) => {
     try {
-      data = new ProductDTO(data)
+      //data = new ProductDTO(data)
       const response = await this.repository.create(data);
       return response;
     } catch (error) {

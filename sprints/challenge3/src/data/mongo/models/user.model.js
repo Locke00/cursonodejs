@@ -11,6 +11,9 @@ const schema = new Schema({      // el id no lo necesito definir ya q se pone au
   role: { type: Number, default: 0 },
   photo: {type: String, default:"https://i.postimg.cc/wTgNFWhR/prifile.png"},
   age: { type: Number, default: 18},
+  verified : { type: Boolean, default: false },
+  verifiedCode : { type: String, required: true }
+
   //date: {type: Date, default: newDate()}
 
   },{ timestamps: true }

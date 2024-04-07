@@ -1,4 +1,4 @@
-//import UserDTO from "../dto/user.dto.js";
+import UserDTO from "../dto/user.dto.js";
 import dao from "../data/index.factory.js";
 
 const { users } = dao;
@@ -8,9 +8,8 @@ class UsersRep {
     this.model = users;
   }
   create = async (data) => {
-    console.log('jeje');
-    //data = new UserDTO(data);
-    const response = await this.model.create(data);
+    //console.log('jeje');
+    const response = await this.model.create(new UserDTO(data));
     return response;
   };
   read = async ({ filter, options }) =>

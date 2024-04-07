@@ -17,6 +17,7 @@ import {
   me,
   signout,
   badauth,
+  verifyAccount
 } from "../../controllers/sessions.controller.js";
 
 class SessionsRouter extends CustomRouter{
@@ -146,6 +147,8 @@ class SessionsRouter extends CustomRouter{
 
 
     this.read("/badauth", ["PUBLIC"], badauth);
+
+    this.create("/verify", ["PUBLIC"], verifyAccount)
 
     
 
