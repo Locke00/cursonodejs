@@ -6,7 +6,7 @@ const environment = argsUtil.env;
 //va a depender de una variable de entorno o del argumento que se pase
 
 let dao = {};
-
+//console.log(environment);
 switch (environment) {
   case "test":
     //vamos a usar MEMORY
