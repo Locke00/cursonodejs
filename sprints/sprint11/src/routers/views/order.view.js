@@ -5,8 +5,8 @@ import CustomRouter from "../CustomRouter.js";
 //import { orders, users } from "../../data/mongo/manager.mongo.js";
 import orders from "../../data/mongo/orders.mongo.js";
 import users from "../../data/mongo/users.mongo.js";
-
 //import passCallBack from "../../middlewares/passCallBack.mid.js";
+import winstonLog from "../../utils/logger/index.js";
 
 export default class OrdersViewRouter extends CustomRouter{
   init(){
@@ -30,13 +30,13 @@ export default class OrdersViewRouter extends CustomRouter{
         const allBSONstr = JSON.stringify(allBSON);
         const all = JSON.parse(allBSONstr);  //queda el objeto en formato json
     
-        //console.log(all.docs[0].product_id);
+        //winstonLog.INFO(all.docs[0].product_id);
         return res.render("orders", { 
           title: "MY CiART",
           orders: all.docs,
         } ) ;
       } catch (error) {
-        console.log({error})
+        winstonLog.ERROR(error.message);
         return res.render("orders", {
           title: "MY wCART",
           message: "NO ORDERS YET!",

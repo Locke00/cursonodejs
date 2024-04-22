@@ -1,3 +1,5 @@
+import winstonLog from "../utils/logger/index.js";
+
 const selector = document.querySelector("#newProduct");
 selector.addEventListener("click", async () => {
   try {
@@ -18,7 +20,7 @@ selector.addEventListener("click", async () => {
     };
     let response = await fetch("/api/products", opts);
     response = await response.json();
-    console.log(response);
+    winstonLog.INFO(JSON.stringify(response));
     response.statusCode === 201
       ? alert("Product created!")
       : alert("ERROR: "+response.message);

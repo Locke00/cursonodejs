@@ -1,4 +1,5 @@
 import notFoundOne from "../../utils/notFoundOne.util.js";
+import winstonLog from "../../utils/logger/index.js";
 
 class ProductsManager {
   static #products = [];
@@ -78,13 +79,13 @@ class ProductsManager {
         ProductsManager.#products = ProductsManager.#products.filter(
           (each) => each.id !== id
         );
-        console.log("Destroyed ID:" + id);
+        winstonLog.INFO("Destroyed ID:" + id);
         return one;
       } else {
         throw new Error("NOT FOUND!");
       }
     } catch (error) {
-      //console.log(error.message);
+      //winstonLog.ERROR(error.message);
       throw new Error()
     }
   }*/
@@ -104,7 +105,8 @@ class ProductsManager {
         ...data,
       };
 
-      console.log(`Product with ID ${id} updated successfully`);
+      winstonLog.INFO(`Product with ID ${id} updated successfully`);
+      
       return ProductsManager.#products[index];
     } catch (error) {
       //console.error(error.message);
@@ -146,11 +148,10 @@ products.create({
   stock: 5,
 });
 
+//winstonLog.INFO("Output of products.read():  ");
+//winstonLog.INFO(JSON.stringify(products.destroy(2)));
+//winstonLog.INFO(JSON.stringify(products.read()));
+//winstonLog.INFO("Output of products.readOne(2):  ");
+//winstonLog.INFO(JSON.stringify(products.readOne(2)));
 
-//console.log("Output of products.read():  ");
-//console.log(products.destroy(2));
-//console.log(products.read());
-
-//console.log('Output of products.readOne(2):  ');
-//console.log(products.readOne(2));
 export default products;

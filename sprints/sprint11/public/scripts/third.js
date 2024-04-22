@@ -1,3 +1,5 @@
+import winstonLog from "./src/utils/logger/index.js";
+
 const selectorGoogle = document.querySelector("#googleRegister");
 selectorGoogle.addEventListener("click", async () => {
   try {
@@ -7,7 +9,7 @@ selectorGoogle.addEventListener("click", async () => {
     };
     let response = await fetch("/api/sessions/google", opts);
     response = await response.json();
-    console.log(response);
+    winstonLog.INFO(reponse)
     //alert(response.message);
     //response.session && location.replace("/");
   } catch (error) {

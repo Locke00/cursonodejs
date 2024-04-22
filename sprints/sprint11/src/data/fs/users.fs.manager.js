@@ -1,5 +1,6 @@
 import fs from "fs";
 import crypto from "crypto";
+import winstonLog from "../../utils/logger/index.js";
 
 //const ruta = "./sprints/sprint2/fs/data/users.fs.json";
 //const configuracion = "utf-8";
@@ -26,7 +27,7 @@ class UserManager {
     this.init();
   }
   async create(data) {
-    //console.log('2222');
+    ////winstonLog.INFO("2222");
     try {
       if (!data.name) {
         throw new Error("user is required");
@@ -45,10 +46,10 @@ class UserManager {
       const jsonData = JSON.stringify(this.users, null, 2);
 
       await fs.promises.writeFile(this.path, jsonData); //all poner await, debo poner async a la funcion donde esta esta instruccion
-      //console.log(user.id);
+      //winstonLog.INFO(user.id);
       return data;
     } catch (error) {
-      console.log(error);
+      winstonLog.ERROR(error.message);
       return error;
     }
   }
@@ -70,14 +71,14 @@ class UserManager {
   }
   readOne(id) {
     try {
-      console.log(id);
+      winstonLog.INFO(id);
       const one = this.users.find((each) => each._id === id);
       if (!one) {
         const error = new Error("NOT FOUND!");
         error.statusCode = 404
         throw error
       } else {
-        //console.log(one);
+        //winstonLog.INFO(JSON.stringify(one));
         return one;
       }
     } catch (error) {
@@ -99,7 +100,7 @@ class UserManager {
   }
 
   async update(id, data) {
-    ///console.log(this.users);
+    //winstonLog.INFO(JSON.stringify(this.users));
     
     try {
       
@@ -115,17 +116,17 @@ class UserManager {
         _id: this.users[userIndex]._id, // Mantener el mismo ID
       };
 
-      console.log(updatedUser);
+      winstonLog.INFO(JSON.stringify(updatedUser));
       
 
       this.users[userIndex] = updatedUser;
 
       await fs.promises.writeFile(this.path, JSON.stringify(this.users, null, 2));
 
-      console.log("User updated successfully");
+      winstonLog.INFO("User updated successfully");
       return updatedUser;
     } catch (error) {
-      //console.log(error);
+      //winstonLog.ERROR(error.message);
       return error;
     }
   }    //updated alternativo
@@ -157,7 +158,7 @@ class UserManager {
           this.path,
           JSON.stringify(this.users, null, 2)
         )
-        console.log("Destroy ID: "+id);
+        winstonLog.INFO("Destroy ID: "+id);
         return one;
       } else {
         const error = new Error("NOT FOUND!");
@@ -167,7 +168,7 @@ class UserManager {
       }
 
     } catch (error){
-      console.log(error);
+      winstonLog.ERROR(error.message);
       return error
     }
   }
@@ -192,14 +193,14 @@ async destroy(id) {
 
 const users = new UserManager("./src/data/fs/files/users.fs.json");
 export default users;
-//console.log(users.read());
+//winstonLog.INFO(JSON.stringify(users.read()));
 
 //await users.readOne("7855492351fe9b5fcd5ba2c6");
 //await users.destroy("7855492351fe9b5fcd5ba2c6");
 //await users.readOne("7855492351fe9b5fcd5ba2c6");
 
 
-//console.log(users.read());
+//winstonLog.INFO(JSON.stringify(users.read()));
 
 /*
 users.create({
@@ -218,8 +219,13 @@ users.create({
   email: "lucas@gmail.com",
 });
 
-console.log('Output of users.read():  ');
-console.log(users.read());
-console.log('Output of users.readOne(2854b8cadedcce4e653d5375):  ');
-console.log(users.readOne("2854b8cadedcce4e653d5375"));
+
+winstonLog.INFO("Output of users.read():  ");
+winstonLog.INFO(JSON.stringify(users.read()));
+winstonLog.INFO("Output of users.readOne(2854b8cadedcce4e653d5375): ");
+winstonLog.INFO(JSON.stringify(users.readOne("2854b8cadedcce4e653d5375")));
+
+
+
+
 */

@@ -4,6 +4,7 @@ import { Strategy as GoogleStrategy } from "passport-google-oauth2";
 import { ExtractJwt, Strategy as JwtStrategy } from "passport-jwt";
 import { createHash, verifyHash } from "../utils/hash.utils.js";
 //import users from "../data/mongo/manager.mongo.js";
+import winstonLog from "../utils/logger/index.js";
 
 import dao from "../data/index.factory.js";
 const { users } = dao
@@ -20,7 +21,7 @@ passport.use(
   new LocalStrategy(
     { passReqToCallback: true, usernameField: "email" },
     async (req, email, password, done) => {
-      //console.log('11111111')
+      //winstonLog.INFO("1111111");
       //async porque hare muchas consulas. si fuera en memoria no seria necesario el sync
       try {
         //verifico q el usuario no existe
@@ -29,14 +30,14 @@ passport.use(
         //let one = await users.readByEmail(req.body.email)   //let xq le tengo q cambiar la contraseña. puedo hacerlo alternativamente con la linea de abajo
         let one = await repository.readByEmail(email); //puedo buscar el email del requerimiento o de la misma callback(xq email === req.body.email)
         if (one) {
-          ///console.log(one)
+          //winstonLog.INFO(JSON.stringify(one));
           done(null, false, { statusCode: 401 }); //si el usuario existe no puedo re-registrarlo, x lo tanto la estrategia termina aca
         } else {
           ////let data = req.body;
           ////data.password = createHash(password);
           //let user = await users.create(data);
           const user = await repository.create(req.body);
-          console.log(user);
+          winstonLog.INFO(JSON.stringify(user));
           return done(null, user);
         }
         //en caso contrario NO DEJO re-registrar
@@ -59,15 +60,15 @@ passport.use(
     async (req, email, password, done) => {
       try {
         const user = await users.readByEmail(email);
-        console.log(user);
+        winstonLog.INFO(JSON.stringify(user));
         if (user?.verified && verifyHash(password, user.password)) {
           //estos dos los comento xq voy a hacer q las sesiones las maneje jwt
           //req.session.email = email;
           //req.session.role = user.role;
           
           const token = createToken({ email, role: user.role });  //crea el token con jwt
-          console.log(token);
-          //console.log("creado el token");
+          winstonLog.INFO(JSON.stringify(token));
+          //winstonLog.INFO("creado el token");
           req.token = token;
           return done(null, user);
         } else {
@@ -120,10 +121,10 @@ passport.use(
       // en profile google me va a mandar unmonton de datos del usuario
       //tb da un accessToken y refreshToken(me los devuelve para q los use en caso de necesidad)
       try {
-        console.log(profile);
+        winstonLog.INFO(JSON.stringify(profile));
         let user = await users.readByEmail(profile.id+"gmail.com"); // primero veo si ya el usuario se creo anteriormente
         //Ahora vamos a guardar los datos del requerimiento con datos de la session
-        console.log(profile.id);
+        winstonLog.INFO(profile.id);
         if (user) {
           //primero lleno la session
           req.session.email = user.email; //(o en su lugar puedo poner profile.id, cualquiera va bien )

@@ -3,7 +3,7 @@
 //const { products } = dao
 import repository from "../repositories/products.rep.js";
 //import ProductDTO from "../dto/product.dto.js";
-
+//import winstonLog from "../utils/logger/index.js";
 
 
 class ProductsService {
@@ -22,7 +22,7 @@ class ProductsService {
   };
   read = async ({ filter, options }) => {
     try {
-      //console.log(this.repository);
+      //winstonLog.INFO(JSON.stringify(this.repository));
       const response = await this.repository.read({ filter, options });
       return response;
     } catch (error) {

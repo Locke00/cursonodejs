@@ -1,6 +1,7 @@
 import repository from "../repositories/users.rep.js";
 //import UserDTO from "../dto/user.dto.js";
 import sendEmail from "../utils/sendEmail.utils.js";
+import winstonLog from "../utils/logger/index.js";
 
 /*import dao from "../data/index.factory.js"
 const {users} = dao
@@ -12,7 +13,7 @@ class UsersService {
   }
   create = async (data) => {
     //data = new UserDTO(data);
-    console.log(data);
+    winstonLog.INFO(JSON.stringify(data));
     const response = await this.repository.create(data);
     return response;
   }

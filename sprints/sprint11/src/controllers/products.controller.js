@@ -1,4 +1,4 @@
-
+import winstonLog from "../utils/logger/index.js";
 import service from "../services/products.service.js"
 
 //import { events } from "../data/mongo/manager.mongo.js";
@@ -57,7 +57,7 @@ class ProductsController {
     try {
       const { pid } = req.params;
       const one = await this.service.readOne(pid);
-      //console.log(one);
+      winstonLog.INFO(JSON.stringify(one))
       return res.success200(one);
     } catch (error) {
       return next(error);  //indica q lo dejo pasar al middleware de errores

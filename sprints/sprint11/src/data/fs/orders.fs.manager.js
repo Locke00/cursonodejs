@@ -3,7 +3,7 @@
 
 import fs from 'fs';      //new syntaxis
 //import crypto from "crypto"
-
+import winstonLog from "../../utils/logger/index.js";
 
 
 class OrderManager {
@@ -44,10 +44,10 @@ class OrderManager {
       const jsonData = JSON.stringify(OrderManager.#orders, null, 2);
 
       await fs.promises.writeFile(this.path, jsonData); //all poner await, debo poner async a la funcion donde esta esta instruccion
-      //console.log(data._id);
+      //winstonLog.INFO(data._id)
       return data
     } catch (error) {
-      console.log(error.message);
+      winstonLog.ERROR(error.message)
       return error.message;
     }
   }
@@ -56,11 +56,12 @@ class OrderManager {
       if (OrderManager.#orders.length === 0) {
         throw new Error("The are no orders!");
       } else {
-        console.log(OrderManager.#orders);
+        //winstonLog.INFO(OrderManager.#orders)
         return OrderManager.#orders;
       }
     } catch (error) {
-      console.log(error.message);
+      winstonLog.ERROR(error.message);
+
       return error.message;
     }
   }
@@ -70,11 +71,11 @@ class OrderManager {
       if (!one) {
         throw new Error("There isn't any order");
       } else {
-        console.log(one);
+        winstonLog.INFO(JSON.stringify(one));
         return one;
       }
     } catch (error) {
-      console.log(error.message);
+      winstonLog.ERROR(error.message);
       return error.message;
     }
   }
@@ -89,14 +90,14 @@ class OrderManager {
           this.path,
           JSON.stringify(OrderManager.#orders, null, 2)
         )
-        console.log("Destroy ID: "+id);
+        winstonLog.INFO("Destroy ID: "+id);
         return one;
       } else {
         throw new Error("there is no order");
       }
 
     } catch (error){
-      console.log(error.message);
+      winstonLog.ERROR(error.message);
       return error.message
     }
   }
@@ -119,10 +120,10 @@ class OrderManager {
 
       await fs.promises.writeFile(this.path, JSON.stringify(OrderManager.#orders, null, 2));
 
-      console.log("Order updated successfully");
+      winstonLog.INFO("Order updated successfully");
       return updatedOrder;
     } catch (error) {
-      console.log(error.message);
+      winstonLog.ERROR(error.message);
       return error.message;
     }
   }
@@ -134,8 +135,7 @@ class OrderManager {
 const orders = new OrderManager("./src/data/fs/files/orders.fs.json");
 export default orders
 
-//console.log(orders.read());
-
+//winstonLog.INFO(JSON.stringify(orders.read()));
 /*
 orders.create({
   pid: "p1111",
@@ -158,11 +158,14 @@ orders.create({
 */
 
 
-//console.log(products.read());
-//console.log(products.readOne("2464fa95246cbd5050e3a466"));
+
+//winstonLog.INFO(JSON.stringify(products.read()));
+//winstonLog.INFO(JSON.stringify(products.readOne("2464fa95246cbd5050e3a466")));
+
 //await products.read();
 //await products.readOne("4a9d62ebb7c4ac575cede2ab");
 //await products.destroy("4a9d62ebb7c4ac575cede2ab");
 //await products.readOne("4a9d62ebb7c4ac575cede2ab");
 
-//console.log(products.destroy("8f2f1521de5e417e989f98cf"));
+//winstonLog.INFO(products.destroy("8f2f1521de5e417e989f98cf"));
+

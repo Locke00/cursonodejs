@@ -5,6 +5,7 @@ import Product from "./models/product.model.js";
 import Order from "./models/order.model.js";
 import notFoundOne from "../../utils/notFoundOne.util.js";
 import { Types } from "mongoose";
+import winstonLog from "../../utils/logger/index.js";
 
 class MongoManager {
   constructor(model) {
@@ -45,7 +46,7 @@ class MongoManager {
 
       const all = await this.model.paginate(filter, orderAndPaginate);
 
-      //console.log(all);
+      //winstonLog.INFO(JSON.stringify(all));
       //if (all.docs.lenght === 0) {
       if (all.totalPages === 0) {
         const error = new Error("There aren't documents");
@@ -155,9 +156,9 @@ class MongoManager {
     try {
       //el profe agregó el .lean(), pero no se para q si lo mismo funca
       const one = await this.model.findById(id).lean();//.lean();
-      //console.log("---start---");
-      //console.log(one);
-      //console.log("---end---");
+      //winstonLog.INFO("--start--");
+      //winstonLog.INFO(JSON.stringify(one));
+      //winstonLog.INFO("--end--");
       //const one = await this.model.findById(id);
       notFoundOne(one);
       /*if (!one) {
@@ -195,7 +196,7 @@ class MongoManager {
   async stats({ filter }) {
     try {
       let stats = await this.model.find(filter).explain("executionStats");
-      console.log(stats);
+      winstonLog.INFO(JSON.stringify(stats));
       stats = {
         quantity: stats.executionStats.nReturned,   //devuelve la cantidad de registros q pasaron el filtro
         time: stats.executionStats.executionStatsMillis   //tiempo q demora

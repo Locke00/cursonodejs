@@ -1,11 +1,11 @@
-console.log("socket");
+//console.log("socket");
 
 const socket = io();
 
 
 socket.on("welcome", (data) => {
   
-  console.log(data);
+//  console.log(data);
 });
 
 socket.on("products", (data)=>{
@@ -18,7 +18,7 @@ socket.on("products", (data)=>{
         </div>
       </div>`
   ).join()
-  console.log(data);
+  //console.log(data);
   document.querySelector("#products").innerHTML = data
 
 

@@ -12,7 +12,7 @@ import CustomRouter from "../CustomRouter.js";
 
 import SessionsViewRouter from "./sessions.view.js";
 import OrdersViewRouter from "./order.view.js";
-
+//import winstonLog from "../../utils/logger/index.js";
 
 
 
@@ -48,7 +48,7 @@ export default class ViewsRouter extends CustomRouter {
         const allBSONstr = JSON.stringify(allBSON);
         const all = JSON.parse(allBSONstr);  //queda el objeto en formato json
     
-        //console.log(all);
+        //winstonLog.INFO(JSON.stringify(all));
         return res.render("index", {
           listaProductos: all.docs,
           next: all.nextPage,
@@ -65,7 +65,7 @@ export default class ViewsRouter extends CustomRouter {
         //    //const listaProductos2 = Array.from(listaProductos)
         //
         //    const date = new Date();
-        //    //console.log(products);
+        //    //winstonLog.INFO(JSON.stringify(products));
         //    return res.render("index", { listaProductos, date }); //devuelvo la vista q tengo q renderizar
         //    // el 1er parametro es la vista, dsp va un objeto vacio
     

@@ -2,6 +2,7 @@
 
 //const fs = require("fs");  //old syntaxis
 import fs from 'fs';      //new syntaxis
+import winstonLog from "../../utils/logger/index.js";
 
 //const crypto = require("crypto"); old
 //import crypto from "crypto"
@@ -52,10 +53,10 @@ class ProductsManager {
       const jsonData = JSON.stringify(ProductsManager.#products, null, 2);
 
       await fs.promises.writeFile(this.path, jsonData); //all poner await, debo poner async a la funcion donde esta esta instruccion
-      //console.log(product.id);
+      //winstonLog.INFO(product.id);
       return data;
     } catch (error) {
-      console.log(error.message);
+      winstonLog.ERROR(error.message);
       return error.message;
     }
   }
@@ -66,11 +67,11 @@ class ProductsManager {
         error.statusCode = 404
         throw error
       } else {
-     //   console.log(ProductsManager.#products);
+     //winstonLog.INFO(ProductsManager.#products);
         return ProductsManager.#products;
       }
     } catch (error) {
-      console.log(error.message);
+      winstonLog.ERROR(error.message);
       return error.message;
     }
   }
@@ -82,11 +83,11 @@ class ProductsManager {
         error.statusCode = 404
         throw error
       } else {
-        console.log(one);
+        winstonLog.INFO(JSON.stringify(one));
         return one;
       }
     } catch (error) {
-      console.log(error.message);
+      winstonLog.ERROR(error.message);
       return error.message;
     }
   }
@@ -101,7 +102,7 @@ class ProductsManager {
           this.path,
           JSON.stringify(ProductsManager.#products, null, 2)
         )
-        console.log("Destroy ID: "+id);
+        winstonLog.INFO("Destroy ID: "+id);
         return one;
       } else {
         const error = new Error("NOT FOUND!");
@@ -109,7 +110,7 @@ class ProductsManager {
         throw error
       }
     } catch (error){
-      console.log(error.message);
+      winstonLog.ERROR(error.message);
       return error.message
     }
   }
@@ -133,10 +134,10 @@ class ProductsManager {
 
       await fs.promises.writeFile(this.path, JSON.stringify(ProductsManager.#products, null, 2));
 
-      console.log("Product updated successfully");
+      winstonLog.INFO("Product updated successfully");
       return updatedProduct;
     } catch (error) {
-      console.log(error.message);
+      winstonLog.ERROR(error.message);
       return error.message;
     }
   }
@@ -149,8 +150,7 @@ const products = new ProductsManager("./src/data/fs/files/products.fs.json");
 export default products
 
 
-//console.log(products.read());
-
+//winstonLog.INFO(JSON.stringify(products.read()));
 /*products.create({
   title: "casa",
   photo: "http://www.multimarcas.com/casa.jpg",
@@ -172,11 +172,11 @@ products.create({
 });
 */
 
-//console.log(products.read());
-//console.log(products.readOne("2464fa95246cbd5050e3a466"));
+//winstonLog.INFO(JSON.stringify(products.read()));
+//winstonLog.INFO(JSON.stringify(products.readOne("2464fa95246cbd5050e3a466")));
 //await products.read();
 //await products.readOne("4a9d62ebb7c4ac575cede2ab");
 //await products.destroy("4a9d62ebb7c4ac575cede2ab");
 //await products.readOne("4a9d62ebb7c4ac575cede2ab");
 
-//console.log(products.destroy("8f2f1521de5e417e989f98cf"));
+//winstonLog.INFO(JSON.stringify(products.destroy("8f2f1521de5e417e989f98cf")));

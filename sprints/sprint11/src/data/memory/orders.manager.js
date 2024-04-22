@@ -1,4 +1,5 @@
 import notFoundOne from "../../utils/notFoundOne.util.js";
+import winstonLog from "../../utils/logger/index.js";
 
 class OrdersManager {
   static #orders = [];
@@ -49,13 +50,13 @@ class OrdersManager {
         OrdersManager.#orders = OrdersManager.#orders.filter(
           (each) => each.id !== id
         );
-        console.log("Destroyed ID:" + id);
+        winstonLog.INFO("Destroyed ID:" + id);
         return id;
       } else {
         throw new Error("there isnt product with ID" + id);
       }
     } catch (error) {}
-    console.log(error.message);
+    winstonLog.ERROR(error.message);
     return error.message;
   }*/
 
@@ -85,7 +86,7 @@ class OrdersManager {
         ...data,
       };
 
-      console.log(`Order with ID ${id} updated successfully`);
+      winstonLog.INFO(`Order with ID ${id} updated successfully`);
       return OrdersManager.#orders[index];
     } catch (error) {
       //console.error(error.message);
@@ -115,11 +116,17 @@ orders.create({
   state: "reservado",
 });
 
-console.log(orders.read());
+winstonLog.INFO(JSON.stringify(orders.read()));
 export default orders;
 
-//console.log("Output of products.read():  ");
-//console.log(products.destroy(2));
-//console.log(products.read());
-//console.log('Output of products.readOne(2):  ');
-//console.log(products.readOne(2));
+
+//winstonLog.INFO("Output of products.read():  ");
+//winstonLog.INFO(JSON.stringify(products.destroy(2)));
+//winstonLog.INFO(JSON.stringify(users.read()));
+//winstonLog.INFO("Output of products.read(2):  ");
+//winstonLog.INFO(JSON.stringify(users.readOne(2)));
+
+
+
+
+

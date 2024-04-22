@@ -1,4 +1,5 @@
 import service from "../services/orders.service.js";
+import winstonLog from "../utils/logger/index.js";
 
 class OrdersController {
   constructor() {
@@ -8,8 +9,8 @@ class OrdersController {
     try {
       const data = req.body;  //los parametros se pueden enviar x body, params o query,. 
                     //cuando creo algo, x lo general se envia x body
-      console.log(req.user);
       data.user_id = req.user._id;
+      winstonLog.INFO(JSON.stringify(data))
       const response = await this.service.create(data);
       return res.success201(response);
     } catch (error) {
@@ -50,7 +51,7 @@ class OrdersController {
   
   readOne = async (req,res,next)=>{
     try {
-      //console.log('bbb');
+      winstonLog.INFO(req.params)
       const { oid } = req.params;
       const one = await this.service.readOne(oid);
       return res.success200(one)

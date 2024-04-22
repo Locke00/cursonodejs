@@ -23,18 +23,19 @@ import expressSession from "express-session"
 import MongoStore from "connect-mongo"
 import args from "./src/utils/args.util.js"
 import cors from "cors";
+import compression from "express-compression";
 
 import { log } from "console";
 import dbConnection from "./src/utils/dbConnection.util.js";
 import userDataMiddleware from "./src/middlewares/userData.mid.js";
-
+import winstonLog from "./src/utils/logger/index.js"
 
 
 const server = express()
 const PORT = process.env.PORT || 8080;
 const ready = () => {
-  console.log("server ready on port " + PORT);
-  dbConnection();
+  winstonLog.INFO("server ready on port " + PORT)
+  //dbConnection();
 };
 //server.listen(PORT,ready)
 
@@ -44,7 +45,7 @@ httpServer.listen(PORT, ready); //este servidor nativo de node va a tener todas 
 
 //este servidor nativo si es compatible con socket
 socketServer.on("connection", socketUtils);
-
+server.use(compression());
 
 
 

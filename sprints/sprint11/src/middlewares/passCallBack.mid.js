@@ -1,11 +1,12 @@
 import passport from "passport";
+import winstonLog from "../utils/logger/index.js";
 
 export default (strategy) => {
   return async(req, res, next) => {
     passport.authenticate(strategy, (error, user, info)=>{
-      ///console.log('222222')
+      ///winstonLog.INFO("222");
 
-      console.log({error, user, info});
+      winstonLog.INFO(JSON.stringify({error, user, info}));
       if (error) {
         return next(error)
       }

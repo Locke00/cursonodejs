@@ -8,7 +8,7 @@ import productsRouter from "./products.router.api.js";
 import sessionsRouter from "./sessions.router.api.js";
 
 import ordersRouter from "./orders.router.api.js";
-
+import loggersRouter from "./loggers.router.api.js";
 
 
 
@@ -22,6 +22,7 @@ export default class ApiRouter extends CustomRouter {
     this.use("/products",productsRouter)
     this.use("/orders",ordersRouter)
     this.use("/sessions",sessionsRouter)
+    this.use("/loggers",loggersRouter)
 
   }
 

@@ -1,11 +1,12 @@
 import { Router } from "express";
+import winstonLog from "../../utils/logger/index.js";
 
 const formRouter = Router();
 
 formRouter.get("/", (req, res, next) => {
   try {
     const user = res.locals.user
-    console.log(user);
+    winstonLog.INFO(JSON.stringify(user));
     if (!user) {
       return res.redirect("/");
     }
@@ -13,7 +14,7 @@ formRouter.get("/", (req, res, next) => {
 
     return res.render("form", { title: "Formulario" });
   } catch (error) {
-    console.log("x aqui paso -catch");
+    winstonLog.INFO("x aqui paso -catch");
     next(error);
   }
 });

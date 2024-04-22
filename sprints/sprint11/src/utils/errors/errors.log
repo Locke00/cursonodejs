@@ -1,0 +1,17 @@
+[33mERROR[39m: Este es un log de ERROR
+[31mFATAL[39m: Este es un log FATAL
+[33mERROR[39m: Este es un log de ERROR
+[31mFATAL[39m: Este es un log FATAL
+ERROR: Este es un log de ERROR
+FATAL: Este es un log FATAL
+ERROR: Este es un log de ERROR
+FATAL: Este es un log FATAL
+ERROR: POST /api/loggers not found path
+ERROR: GET /styles.css not found path
+ERROR: GET /favicon.ico not found path
+ERROR: GET /styles.css not found path
+ERROR: GET /favicon.ico not found path
+ERROR: GET /styles.css not found path
+ERROR: GET /favicon.ico not found path
+ERROR: GET /styles.css not found path
+ERROR: GET /favicon.ico not found path

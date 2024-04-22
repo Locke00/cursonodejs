@@ -1,4 +1,5 @@
 import service from "../services/users.service.js";
+import winstonLog from "../utils/logger/index.js";
 
 class SessionsController {
   constructor() {
@@ -54,7 +55,7 @@ class SessionsController {
   };
   me = async (req, res, next) => {
     try {
-      console.log(req.user);
+      winstonLog.INFO(JSON.stringify(req.user));
       const user = {
         email: req.user.email,
         role: req.user.role,

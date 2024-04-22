@@ -1,4 +1,5 @@
 import crypto from "crypto";
+import winstonLog from "../../utils/logger/index.js";
 
 class UsersManager {
   static #users = [];
@@ -90,7 +91,7 @@ class UsersManager {
         ...data,
       };
 
-      console.log(`User with ID ${id} updated successfully`);
+      winstonLog.INFO(`User with ID ${id} updated successfully`);
       return UsersManager.#users[index];
     } catch (error) {
       console.error(error.message);
@@ -153,11 +154,13 @@ users.create({
   password: "$2b$10$7FfrKQs7Dxd5/HBXRC39ee3GRjXDExHxjfy1dILHHxannxr4RbNla"
 });
 
-//console.log("Output of users.read():  ");
-//console.log(users.destroy(2));
-//console.log(users.read());
-//console.log('Output of users.readOne(2):  ');
-//console.log(users.readOne(2));
+//winstonLog.INFO("Output of users.read():  ");
+//winstonLog.INFO(JSON.stringify(users.destroy(2)));
+//winstonLog.INFO(JSON.stringify(users.read()));
+//winstonLog.INFO("Output of users.readOne(2):  ");
+//winstonLog.INFO(JSON.stringify(users.readOne(2)));
+
+
 
 //const users = new UsersManager();
 export default users;

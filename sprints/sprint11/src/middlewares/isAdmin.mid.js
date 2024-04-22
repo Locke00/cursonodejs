@@ -1,15 +1,16 @@
 import { verifytoken } from "../utils/token.util.js";
+//import winstonLog from "../utils/logger/index.js";
 
 export default (req, res, next) => {
   try {
-    //console.log(req);
+    //winstonLog.INFO(JSON.stringify(req));
     const token = req.cookies.token
-    //console.log(token);
+    //winstonLog.INFO(JSON.stringify(toke));
     const userData = verifytoken(token)
     
   
     const { role } = userData;
-    //console.log(role);
+    //winstonLog.INFO(role);
     if (role === 1 ) {
       return next();
     } else {

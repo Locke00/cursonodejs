@@ -134,9 +134,9 @@ class SessionsRouter extends CustomRouter{
     //  passCallBackMid("jwt"),
     //  async (req, res, next) => {
     //    try {
-    //      console.log('---start--');
-    //      console.log(req);
-    //      console.log('---end--');
+            //winstonLog.INFO("--start--");
+            //winstonLog.INFO(JSON.stringify(req));
+            //winstonLog.INFO("--end--");
     //      let user = req.user
     //      return res.success200(user)
     //    } catch (error) {

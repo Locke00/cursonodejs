@@ -1,3 +1,5 @@
+import winstonLog from "./src/utils/logger/index.js";
+
 document.querySelector("#signout").addEventListener("click", async () => {
   try {
     const token = localStorage.getItem("token");
@@ -16,6 +18,6 @@ document.querySelector("#signout").addEventListener("click", async () => {
       location.replace("/");
     }
   } catch (error) {
-    console.log(error);
+    winstonLog.ERROR(error.message)
   }
 });

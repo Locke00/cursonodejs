@@ -1,5 +1,6 @@
 import UserDTO from "../dto/user.dto.js";
 import dao from "../data/index.factory.js";
+//import winstonLog from "../utils/logger/index.js";
 
 const { users } = dao;
 
@@ -8,7 +9,7 @@ class UsersRep {
     this.model = users;
   }
   create = async (data) => {
-    //console.log('jeje');
+    //winstonLog.INFO("1111111");
     const response = await this.model.create(new UserDTO(data));
     return response;
   };

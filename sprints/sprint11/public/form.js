@@ -17,9 +17,9 @@ document.querySelector("#newProduct").addEventListener("click", (event) => {
   }
   price && (data.price = price);
   stock && (data.stock = stock);
-  console.log(data);
+  //console.log(data);
   
   socket.emit("new product", data);
-  console.log("x aqui paso");
+  //console.log("x aqui paso");
 
 });

@@ -1,8 +1,10 @@
 import { createTransport } from "nodemailer";//no importo todo el modulo,
                                              //sino solo el creador del transporte
+//import winstonLog from "../utils/logger/index.js";
+
 async function sendEmail(data) {  //se envia data.email, data.name y data.verifiedCode
   try {
-    //console.log(data);
+    //winstonLog.INFO(JSON.stringify(data));
     const transport = createTransport({
       service: "gmail",       //aqui puede ir otro servicio como el outlook, etc
       port: process.env.PORT, //funciona el puerto 8080, aunq no es lo mas recomendable

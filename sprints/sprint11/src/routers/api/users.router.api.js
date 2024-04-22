@@ -1,9 +1,10 @@
 
 import CustomRouter from "../CustomRouter.js";
-
+//import winstonLog from "../../utils/logger/index.js";
 //import users from "../../data/fs/users.fs.manager.js"
 //import { users } from "../../data/mongo/manager.mongo.js";
 //const usersRouter = Router()
+//import winstonLog from "../../utils/logger/index.js";
 
 import {
   create,
@@ -18,7 +19,7 @@ import {
 
 class UsersRouter extends CustomRouter {
   init() {
-    //console.log('aaaa');
+    //winstonLog.INFO("aaa");
     //aca defino los endpoint (post, get, put, delete)
     this.create("/", ["PUBLIC"], create);
     this.read("/", ["PUBLIC"], read);
@@ -38,11 +39,11 @@ export default usersRouter.getRouter();
     //  try {
     //    let filter = {}; //este tiene q ser let
     //    if (req.query.email && req.query.password) {
-    //      console.log("ingresado mail y pass");
+    //      winstonLog.INFO(""ingresado mail y pass"");
     //      filter = { email: req.query.email, password: req.query.password };
     //      const all = await users.read({ filter });
-    //      //console.log(all);
-    //      console.log(all.docs.length);
+    //      //cwinstonLog.INFO(JSON.stringify(all));
+    //      winstonLog.INFO(all.docs.length);
     //      if (all.docs.length >= 1) {
     //        req.session.email = req.query.email;
     //        return json({
@@ -52,7 +53,7 @@ export default usersRouter.getRouter();
     //        });
     //      }
     //    } else {
-    //      console.log("no ingresado mail y pass");
+    //      winstonLog.INFO("no ingresado mail y pass");
     //    }
     //    const error = new Error("Bad auth");
     //    error.statusCode = 401;
@@ -67,11 +68,11 @@ export default usersRouter.getRouter();
     //        const { email, password } = req.query;
     //        
     //        const one = await users.isuser(email, password)
-    //        console.log(one);
-    //        //console.log(typeof(one));
-    //        //console.log(one[0]._id);
+    //        winstonLog.INFO(JSON.stringify(one));
+    //        //winstonLog.INFO(typeof(one));
+    //        //winstonLog.INFO(one[0]._id);
     //        //const one = await users.findOne({ email: "joseluis@gmail.com" }, {email:1, password: 1})
-    //        //console.log(one);
+    //        //winstonLog.INFO(JSON.stringify(one));
     //        
     //        if (!one) {
     //          const error = new Error("There isn't any documents");
@@ -91,7 +92,7 @@ export default usersRouter.getRouter();
 
 //      this.read("/", ["PUBLIC"], async (req, res, next) => {
 //      try {
-//        console.log("paso x aqui");
+//        //winstonLog.INFO("1111111");
 //        const filter = {};
 //        if (req.query.name) {
 //          filter.name = new RegExp(req.query.name.trim(), "i");

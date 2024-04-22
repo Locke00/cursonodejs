@@ -52,7 +52,7 @@ class UsersController {
     try {
       const { uid } = req.params;
       const one = await this.service.readOne(uid);
-      //console.log(one);
+      //winstonLog.INFO(JSON.stringify(one));
       return res.success200(one);
     } catch (error) {
       return next(error);
