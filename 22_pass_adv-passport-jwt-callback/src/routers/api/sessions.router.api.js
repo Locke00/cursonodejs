@@ -84,11 +84,11 @@ sessionsRouter.post("/", async (req, res, next) => {
 //failureRedirect: "/api/sessions/signout/cb"  le agrego para q en caso q falle(x ej si intento desloguearme estando deslogueado, no me aparezca el error de unauthorized)
 sessionsRouter.post(
   "/signout",
-  /*passport.authenticate("jwt", {
+  /*passport.authenticate("jwt", {  //este bloque lo comento xq ya no lo usar, sino q en su lugar usaré passCallBack("jwt")
     session: false,
     failureRedirect: "/api/sessions/signout/cb",
   }),*/
-  passCallBack("jwt"),
+  passCallBack("jwt"),  //en el parentesis el paso eltipo de estrategi
   async (req, res, next) => {
     try {
       return res.clearCookie("token").json({
