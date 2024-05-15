@@ -1,0 +1,108 @@
+components:
+  schemas:
+    Product:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Nombre del producto
+        photo:
+          type: string
+          description: La url de la foto del producto
+        price:
+          type: number
+          description: El precio del produto
+        stock:
+          type: number
+          description: El estoy que queda disponible
+      example:
+        title: wii
+        photo: https://http2.mlstatic.com/D_NQ_NP_2X_813569-MLA32731593369_112019-F.webp
+        price: 40000
+        stock: 3
+  securitySchemes:
+    cookieAuth:     # aqui configuramos la autenticacion x cookie
+      type: apiKey
+      in: cookie
+      name: token
+  responses:
+    res201:
+      type: object
+      properties:
+        statusCode:
+          type: number
+          descritpion: Successfull Status Code
+        response:
+          type: object
+          properties:
+            title:
+              type: string
+              description: Titulo del producto
+            photo:
+              type: string
+              description: Url de una foto representativa del producto
+            price:
+              type: number
+              descripcion: Precio del producto
+            stock:
+              type: number
+              descripcion: cantidad de productos en stock
+            _id:
+              type: string
+              descripcion: identificador unico del producto
+            createdAt:
+              type: date
+              descripcion: fecha de creacion del producto
+            updatedAt:
+              type: date
+              descripcion: fecha de actualizacion del producto
+            aav:
+              type: number
+              descripcion:  version
+          description: Datos del producto creado, agregando id y timestamps
+      example:
+        statusCode: 201,
+        response: 
+          title: wii8
+          photo: https://http2.mlstatic.com/D_NQ_NP_2X_813569-MLA32731593369_112019-F.webp
+          price: 40000
+          stock: 3
+          _id: 66426505acfeadfd7b4ebcaa
+          createdAt: 2024-05-13T19:07:49.410Z
+          updatedAt: 2024-05-13T19:07:49.410Z
+          __v: 0
+
+paths:
+  /api/products:
+    post:
+      summary: To create a a product
+      tags:
+        - Products
+      security:
+        - cookieAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#components/schemas/Product'
+      responses:
+        '201':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#components/responses/res201'
+
+    get:
+      summary: To get the list of products
+      tags:
+        - Products
+      responses:
+        '200':
+          description: data of the product
+          content:
+            application/json:
+              schema:
+                $ref: '#components/responses/res200'                
+

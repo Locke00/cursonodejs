@@ -30,6 +30,12 @@ import dbConnection from "./src/utils/dbConnection.util.js";
 import userDataMiddleware from "./src/middlewares/userData.mid.js";
 import winstonLog from "./src/utils/logger/index.js"
 
+import swaggerJSDoc from "swagger-jsdoc";  //va a permitir manejar las opciones de swagger
+import { serve, setup } from "swagger-ui-express";  //middlewares de ui-express
+
+import swaggerOptions from "./src/config/swagger.js";
+
+
 
 const server = express()
 const PORT = process.env.PORT || 8080;
@@ -92,8 +98,6 @@ server.use(expressSession({
 )
 
 
-
-
 //server.use("/",router)            //q use todas las rutas q voy a definir en ese enrutador principal
 const router = new IndexRouter() //router es una instancia en enrutador, no es un enrutador con todos los endpoints
 server.use("/", router.getRouter());
@@ -101,6 +105,12 @@ server.use("/", router.getRouter());
 
 server.use(errorHandler)
 server.use(pathHandler)
+
+
+//y para utilizarlo:
+const specs = swaggerJSDoc(swaggerOptions);   //le paso las ocopmes de configuracion q les pasamos
+server.use("/api/docs", serve, setup(specs)); //le obligos a q use la ruta '/api/docs', con configure las respuestas y 
+    //requerimientos con el middleware 'server', y q retorne la interfazcon setup, con los resultados usando setup(specs)
 
 
 export { socketServer }
