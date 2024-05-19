@@ -248,6 +248,19 @@ paths:
       summary: To get the list of products
       tags:
         - Products
+      parameters:
+        - name: limit
+          in: path
+          required: true
+          description: Cantidad maxima de productos por pagina
+          schema:
+          $type: Number
+        - name: page
+          in: path
+          required: true
+          description: Nro de pagina a mostrar
+          schema:
+            $type: Number  
       responses:
         '200':
           description: data of the product
