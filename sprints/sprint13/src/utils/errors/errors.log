@@ -15,3 +15,10 @@ ERROR: GET /styles.css not found path
 ERROR: GET /favicon.ico not found path
 ERROR: GET /styles.css not found path
 ERROR: GET /favicon.ico not found path
+ERROR: GET /api/docs/ not found path
+ERROR: GET /favicon.ico not found path
+ERROR: GET /api/docs/ not found path
+ERROR: GET /favicon.ico not found path
+ERROR: GET /api/docs/ not found path
+ERROR: GET /favicon.ico not found path
+ERROR: Cast to ObjectId failed for value "2134123412512345123434352323412342344" (type string) at path "_id" for model "products"

@@ -4,7 +4,7 @@ const options = {
   definition: {       //primero le paso un objeto con las propiedades
     openapi: "3.0.1", //version actual del swagger
     info: {              //info del proyecto
-      title: "ADOPT ME API",
+      title: "Venta de Garage",
       description: "Documentation of API",
     },
   },

@@ -56,12 +56,12 @@ components:
             updatedAt:
               type: date
               descripcion: fecha de actualizacion del producto
-            aav:
+            __v:
               type: number
               descripcion:  version
           description: Datos del producto creado, agregando id y timestamps
       example:
-        statusCode: 201,
+        statusCode: 201
         response: 
           title: wii8
           photo: https://http2.mlstatic.com/D_NQ_NP_2X_813569-MLA32731593369_112019-F.webp
@@ -71,6 +71,150 @@ components:
           createdAt: 2024-05-13T19:07:49.410Z
           updatedAt: 2024-05-13T19:07:49.410Z
           __v: 0
+    res200get:
+      type: object
+      properties:
+        statusCode:
+          type: integer
+          description: Successfull Code
+        response:
+          type: object
+          properties:
+            docs:
+              type: array
+              items: '#components/schemas/Product'
+            totalDocs:
+              type: integer
+              description: Cantidad total de Productos
+            offset:
+              type: integer
+              description: Offset, del listado
+            limit:
+              type: integer
+              description: Limite
+            totalPages:
+              type: integer
+              description: Cantidad total de paginas
+            page:
+              type: integer
+              description: Nro de pagina
+            pagingCounter:
+              type: integer
+              description: Pagina actual
+            hasPrevPage:
+              type: boolean
+              description: Indica si hay una pagina antes
+            hasNextPage:
+              type: boolean
+              description: Indica si hay una pagina despues
+            prevPage:
+              type: integer
+              description: Indica cual es el nro de la pagina anterior
+            nextPage:
+              type: integer
+              description: Indica cual es el nro de la pagina siguiente
+      example:
+        statusCode: 200
+        response:
+          docs:    # es un arreglo
+            - _id: "660ae172c32b43ccaa6e9ab5"   
+              title: "wii6"
+              photo: "http://www.multimarcas.com/casa.jpg"
+              price: 3000
+              stock: 600
+              createdAt: "2024-04-01T16:31:46.774Z"
+              updatedAt: "2024-04-01T16:32:25.348Z"
+              __v: 0
+            - _id: "660ae1d8bd59b374552d4de0"
+              title: "wii5"
+              photo: "https://http2.mlstatic.com/D_NQ_NP_2X_813569-MLA32731593369_112019-F.webp"
+              price: 40000
+              stock: 3
+              createdAt: "2024-04-01T16:33:28.813Z"
+              updatedAt: "2024-04-01T16:33:28.813Z"
+              __v: 0
+          totalDocs: 25
+          offset: 0
+          limit: 2
+          totalPages: 13
+          page: 1
+          pagingCounter: 1
+          hasPrevPage: false
+          hasNextPage: true
+          prevPage: null
+          nextPage: 2
+
+    res200putdelete:
+      type: object
+      properties:
+        statusCode:
+          type: number
+          descritpion: Successfull Status Code
+        response:
+          type: object
+          properties:
+            title:
+              type: string
+              description: Titulo del producto
+            photo:
+              type: string
+              description: Url de una foto representativa del producto
+            price:
+              type: number
+              descripcion: Precio del producto
+            stock:
+              type: number
+              descripcion: cantidad de productos en stock
+            _id:
+              type: string
+              descripcion: identificador unico del producto
+            createdAt:
+              type: date
+              descripcion: fecha de creacion del producto
+            updatedAt:
+              type: date
+              descripcion: fecha de actualizacion del producto
+            __v:
+              type: number
+              descripcion:  version
+          description: Datos del producto modificado o elimnado
+      example:
+        statusCode: 200
+        response: 
+          title: wii8
+          photo: https://http2.mlstatic.com/D_NQ_NP_2X_813569-MLA32731593369_112019-F.webp
+          price: 40000
+          stock: 3
+          _id: 66426505acfeadfd7b4ebcaa
+          createdAt: 2024-05-13T19:07:49.410Z
+          updatedAt: 2024-05-13T19:07:49.410Z
+          __v: 0
+    res401:
+      type: object
+      properties:
+        statusCode:
+          type: number
+          descritpion: Error Status Code
+        response:
+          type: string
+          description: Indica el tipo de error
+      example:
+        statusCode: 401
+        response: Bad auth!
+
+    res404:
+      type: object
+      properties:
+        statusCode:
+          type: number
+          descritpion: Error Status Code
+        response:
+          type: string
+          description: Indica el tipo de error
+      example:
+        statusCode: 404
+        response: NOT FOUND
+
 
 paths:
   /api/products:
@@ -93,6 +237,12 @@ paths:
             application/json:
               schema:
                 $ref: '#components/responses/res201'
+        '401':
+          description: Error en la autenticacion
+          content:
+            application/json:
+              schema:
+                $ref: '#components/responses/res401'
 
     get:
       summary: To get the list of products
@@ -104,5 +254,73 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#components/responses/res200'                
+                $ref: '#components/responses/res200get'
+    put:
+      summary: Actualiza un producto
+      tags:
+        - Products
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#components/schemas/Product'
+      parameters:
+        - name: pid
+          in: path
+          required: true
+          description: identificador del producto a modificar
+          schema:
+            $type: String  
+      responses:
+        '200':
+          description: data of the product
+          content:
+            application/json:
+              schema:
+                $ref: '#components/responses/res200putdelete'
+        '401':
+          description: Error en la autenticacion
+          content:
+            application/json:
+              schema:
+                $ref: '#components/responses/res401'
+        '404':
+          description: Error, no se encuentra el producto
+          content:
+            application/json:
+              schema:
+                $ref: '#components/responses/res404'
+
+    delete:
+      summary: Elimina un producto
+      tags:
+        - Products
+      parameters:
+        - name: pid
+          in: path
+          required: true
+          description: identificador del producto a eliminar
+          schema:
+            $type: String  
+      responses:
+        '200':
+          description: Data del producto eliminado
+          content:
+            application/json:
+              schema:
+                $ref: '#components/responses/res200putdelete'
+        '401':
+          description: Error en la autenticacion
+          content:
+            application/json:
+              schema:
+                $ref: '#components/responses/res401'
+        '404':
+          description: Error, no se encuentra el producto
+          content:
+            application/json:
+              schema:
+                $ref: '#components/responses/res404'
+
 

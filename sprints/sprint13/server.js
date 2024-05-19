@@ -97,6 +97,12 @@ server.use(expressSession({
 })
 )
 
+//y para utilizarlo:
+const specs = swaggerJSDoc(swaggerOptions);   //le paso las ocopmes de configuracion q les pasamos
+server.use("/api/docs", serve, setup(specs)); //le obligos a q use la ruta '/api/docs', con configure las respuestas y 
+    //requerimientos con el middleware 'server', y q retorne la interfazcon setup, con los resultados usando setup(specs)
+
+
 
 //server.use("/",router)            //q use todas las rutas q voy a definir en ese enrutador principal
 const router = new IndexRouter() //router es una instancia en enrutador, no es un enrutador con todos los endpoints
@@ -107,10 +113,6 @@ server.use(errorHandler)
 server.use(pathHandler)
 
 
-//y para utilizarlo:
-const specs = swaggerJSDoc(swaggerOptions);   //le paso las ocopmes de configuracion q les pasamos
-server.use("/api/docs", serve, setup(specs)); //le obligos a q use la ruta '/api/docs', con configure las respuestas y 
-    //requerimientos con el middleware 'server', y q retorne la interfazcon setup, con los resultados usando setup(specs)
 
 
 export { socketServer }
