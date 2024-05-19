@@ -1,0 +1,24 @@
+[33mERROR[39m: Este es un log de ERROR
+[31mFATAL[39m: Este es un log FATAL
+[33mERROR[39m: Este es un log de ERROR
+[31mFATAL[39m: Este es un log FATAL
+ERROR: Este es un log de ERROR
+FATAL: Este es un log FATAL
+ERROR: Este es un log de ERROR
+FATAL: Este es un log FATAL
+ERROR: POST /api/loggers not found path
+ERROR: GET /styles.css not found path
+ERROR: GET /favicon.ico not found path
+ERROR: GET /styles.css not found path
+ERROR: GET /favicon.ico not found path
+ERROR: GET /styles.css not found path
+ERROR: GET /favicon.ico not found path
+ERROR: GET /styles.css not found path
+ERROR: GET /favicon.ico not found path
+ERROR: GET /api/docs/ not found path
+ERROR: GET /favicon.ico not found path
+ERROR: GET /api/docs/ not found path
+ERROR: GET /favicon.ico not found path
+ERROR: GET /api/docs/ not found path
+ERROR: GET /favicon.ico not found path
+ERROR: Cast to ObjectId failed for value "2134123412512345123434352323412342344" (type string) at path "_id" for model "products"
